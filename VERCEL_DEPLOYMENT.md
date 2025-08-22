@@ -12,7 +12,7 @@
 
 ```bash
 DATABASE_URL=postgresql://your_neon_connection_string
-JWT_SECRET=your-super-secret-jwt-key-minimum-32-characters  
+JWT_SECRET=your-super-secret-jwt-key-minimum-32-characters
 GOOGLE_AI_API_KEY=your-google-ai-api-key
 TWILIO_ACCOUNT_SID=your-twilio-account-sid (optional)
 TWILIO_AUTH_TOKEN=your-twilio-auth-token (optional)
@@ -40,13 +40,13 @@ Vercel should auto-detect the configuration from `vercel.json`, but verify:
 
 In Vercel Dashboard → Settings → Environment Variables:
 
-| Variable | Value | Environment |
-|----------|--------|-------------|
-| `DATABASE_URL` | Your Neon PostgreSQL connection string | Production, Preview, Development |
-| `JWT_SECRET` | Strong secret key (32+ characters) | Production, Preview, Development |
-| `GOOGLE_AI_API_KEY` | Your Google AI API key | Production, Preview, Development |
-| `TWILIO_ACCOUNT_SID` | Your Twilio SID (optional) | Production, Preview, Development |
-| `TWILIO_AUTH_TOKEN` | Your Twilio token (optional) | Production, Preview, Development |
+| Variable             | Value                                  | Environment                      |
+| -------------------- | -------------------------------------- | -------------------------------- |
+| `DATABASE_URL`       | Your Neon PostgreSQL connection string | Production, Preview, Development |
+| `JWT_SECRET`         | Strong secret key (32+ characters)     | Production, Preview, Development |
+| `GOOGLE_AI_API_KEY`  | Your Google AI API key                 | Production, Preview, Development |
+| `TWILIO_ACCOUNT_SID` | Your Twilio SID (optional)             | Production, Preview, Development |
+| `TWILIO_AUTH_TOKEN`  | Your Twilio token (optional)           | Production, Preview, Development |
 
 ### 4. Deploy
 
@@ -120,6 +120,7 @@ Verify these features work:
 ```
 
 This configuration:
+
 - Builds React frontend as static files
 - Deploys backend as serverless functions
 - Routes API calls to `/api/*` to backend
@@ -130,16 +131,19 @@ This configuration:
 ### Common Issues
 
 1. **Build Fails**
+
    - Check environment variables are set
    - Verify all dependencies are in package.json
    - Check build logs in Vercel dashboard
 
 2. **API Not Working**
+
    - Ensure environment variables are set in Vercel
    - Check function logs in Vercel dashboard
    - Verify CORS configuration
 
 3. **Database Connection Issues**
+
    - Verify DATABASE_URL is correct
    - Check Neon database is accessible
    - Ensure SSL mode is required in connection string

@@ -2,11 +2,7 @@
 
 > **Live Demo**: [CureConnect AI on Vercel](https://cure-connect-ai.vercel.app/) > **Repository**: [GitHub - CureConnectAI](https://github.com/wajiddaudtamboli/CureConnectAI)
 
-## � **SECURITY NOTICE**
-
-**⚠️ IMPORTANT**: This repository does NOT contain any API keys or sensitive data. All environment variables are in `.env.example` templates. You must create your own `.env` files with your actual credentials before deployment.
-
-## �🚀 Quick Links
+## 🚀 Quick Links
 
 - **🌐 Web App**: React + Vite frontend with AI integration
 - **📱 Mobile App**: React Native + Expo cross-platform
