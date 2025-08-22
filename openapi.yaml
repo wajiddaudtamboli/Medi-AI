@@ -1,0 +1,511 @@
+openapi: 3.0.3
+info:
+  title: CureConnect AI Healthcare Platform API
+  description: |
+    **CureConnect AI** is a comprehensive healthcare platform that combines traditional medical approaches with cutting-edge AI technology.
+    
+    ## Features
+    - 🤖 **AI-Powered Medical Analysis** using Google Gemini 1.5-flash
+    - 🚨 **Emergency Assessment System** with 5-level urgency classification
+    - 🏥 **Multi-Modal Health Advisory** (Conventional, Ayurvedic, Homeopathic)
+    - 🎥 **Real-time Video Consultations** via WebRTC
+    - 📱 **Cross-Platform Support** (Web, Mobile)
+    
+    ## Authentication
+    Most endpoints require JWT authentication. Include the token in the Authorization header:
+    ```
+    Authorization: Bearer <your_jwt_token>
+    ```
+  version: 1.0.0
+  contact:
+    name: CureConnect AI Support
+    url: https://github.com/wajiddaudtamboli/CureConnectAI
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:5002/api/v1
+    description: Development server
+  - url: https://cure-connect-ai.vercel.app/api/v1
+    description: Production server
+
+paths:
+  /register:
+    post:
+      tags:
+        - Authentication
+      summary: Register a new user
+      description: Register a new patient or doctor account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - contact
+                - password
+                - role
+              properties:
+                name:
+                  type: string
+                  example: "John Doe"
+                contact:
+                  type: string
+                  format: email
+                  example: "john@example.com"
+                password:
+                  type: string
+                  minLength: 6
+                  example: "securepassword123"
+                role:
+                  type: string
+                  enum: [patient, doctor]
+                  example: "patient"
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /login:
+    post:
+      tags:
+        - Authentication
+      summary: User login
+      description: Authenticate user and receive JWT token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - contact
+                - password
+              properties:
+                contact:
+                  type: string
+                  example: "john@example.com"
+                password:
+                  type: string
+                  example: "securepassword123"
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /logout:
+    get:
+      tags:
+        - Authentication
+      summary: User logout
+      description: Logout user and invalidate JWT token
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Logout successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Logged Out"
+
+  /me:
+    get:
+      tags:
+        - Authentication
+      summary: Get current user profile
+      description: Retrieve authenticated user's profile information
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: User profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  user:
+                    $ref: '#/components/schemas/User'
+
+  /doctors:
+    get:
+      tags:
+        - Medical Services
+      summary: Get all doctors
+      description: Retrieve list of all registered doctors
+      responses:
+        '200':
+          description: Doctors list retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  count:
+                    type: integer
+                    example: 5
+                  doctors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Doctor'
+
+  /medical-history:
+    post:
+      tags:
+        - Medical Services
+      summary: Add medical history record
+      description: Add a new medical analysis record to user's history
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - analysis
+                - url
+              properties:
+                analysis:
+                  type: string
+                  example: "ECG shows normal sinus rhythm with no abnormalities detected."
+                url:
+                  type: string
+                  format: uri
+                  example: "https://cloudinary.com/image_url"
+                type:
+                  type: string
+                  enum: [image, video]
+                  example: "image"
+      responses:
+        '200':
+          description: Medical history added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Medical history added successfully"
+                  medicalHistory:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MedicalRecord'
+
+  /medical-history/{userId}:
+    get:
+      tags:
+        - Medical Services
+      summary: Get medical history
+      description: Retrieve medical history for a specific user
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "60f7b1b3b3f3f3f3f3f3f3f3"
+      responses:
+        '200':
+          description: Medical history retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  medicalHistory:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MedicalRecord'
+
+  /emergency/notify:
+    post:
+      tags:
+        - Emergency Services
+      summary: Create emergency notification
+      description: Send emergency alert to all available doctors
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "Emergency medical assistance required"
+                urgencyLevel:
+                  type: integer
+                  minimum: 1
+                  maximum: 5
+                  example: 5
+                symptoms:
+                  type: array
+                  items:
+                    type: string
+                  example: ["chest pain", "difficulty breathing"]
+      responses:
+        '201':
+          description: Emergency notification sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  roomId:
+                    type: string
+                    example: "emergency"
+                  message:
+                    type: string
+                    example: "Emergency notification sent to all available doctors"
+
+  /emergency/notifications:
+    get:
+      tags:
+        - Emergency Services
+      summary: Get emergency notifications (Doctors only)
+      description: Retrieve pending emergency notifications for doctors
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Emergency notifications retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  notifications:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EmergencyNotification'
+
+  /chat:
+    post:
+      tags:
+        - AI Services
+      summary: AI chat consultation
+      description: Get AI-powered medical advice and health consultation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  example: "I have been experiencing headaches for the past week"
+      responses:
+        '200':
+          description: AI consultation response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Based on your symptoms, headaches can have various causes..."
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "60f7b1b3b3f3f3f3f3f3f3f3"
+        name:
+          type: string
+          example: "John Doe"
+        contact:
+          type: string
+          example: "john@example.com"
+        role:
+          type: string
+          enum: [patient, doctor]
+          example: "patient"
+        avatar:
+          type: object
+          properties:
+            public_id:
+              type: string
+              example: "avatar_id"
+            url:
+              type: string
+              example: "https://cloudinary.com/avatar_url"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2025-08-22T10:30:00Z"
+
+    Doctor:
+      allOf:
+        - $ref: '#/components/schemas/User'
+        - type: object
+          properties:
+            speciality:
+              type: string
+              example: "Cardiology"
+            availability:
+              type: string
+              enum: [Available, Busy, Offline]
+              example: "Available"
+
+    MedicalRecord:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "60f7b1b3b3f3f3f3f3f3f3f3"
+        analysis:
+          type: string
+          example: "ECG shows normal sinus rhythm..."
+        image:
+          type: object
+          properties:
+            url:
+              type: string
+              format: uri
+              example: "https://cloudinary.com/image_url"
+            type:
+              type: string
+              enum: [image, video]
+              example: "image"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2025-08-22T10:30:00Z"
+
+    EmergencyNotification:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "60f7b1b3b3f3f3f3f3f3f3f3"
+        patient:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "John Doe"
+            contact:
+              type: string
+              example: "john@example.com"
+        status:
+          type: string
+          enum: [pending, responded, resolved]
+          example: "pending"
+        roomId:
+          type: string
+          example: "emergency"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2025-08-22T10:30:00Z"
+
+    AuthResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        user:
+          $ref: '#/components/schemas/User'
+        token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: "Error description"
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: "ERROR_CODE"
+            details:
+              type: string
+              example: "Additional error details"
+
+tags:
+  - name: Authentication
+    description: User authentication and profile management
+  - name: Medical Services
+    description: Medical records and doctor management
+  - name: Emergency Services
+    description: Emergency notifications and alerts
+  - name: AI Services
+    description: AI-powered medical consultation and analysis
