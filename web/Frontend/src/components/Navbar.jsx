@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/userActions.js";
+import HealthAdvisory from "./HealthAdvisory.jsx";
 
 // Constants
 const NAV_ITEMS = [
@@ -80,6 +81,7 @@ export default function Navbar() {
 
                 {/* Desktop buttons */}
                 <div className="hidden md:flex items-center space-x-4 mr-2 md:mr-6">
+                    <HealthAdvisory />
                     <div id="google_translate_element" className="ml-4" />
                     {!isAuthenticated ? (
                         <a
@@ -123,7 +125,8 @@ export default function Navbar() {
                             </a>
                         ))}
                     </ul>
-                    <div className="p-4">
+                    <div className="p-4 space-y-3">
+                        <HealthAdvisory />
                         {!isAuthenticated ? (
                             <a
                                 href="/login"

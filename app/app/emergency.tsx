@@ -1,19 +1,52 @@
 import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Stack } from 'expo-router';
-import React from 'react';
-import { Linking, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
+import { Alert, Linking, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function EmergencyPage() {
   const emergencyNumber = '8047492503';
+  const [isEmergencyActive, setIsEmergencyActive] = useState(false);
 
   const handleCallNow = () => {
-    let phoneNumber = '';
-    if (Platform.OS === 'android') {
-      phoneNumber = `tel:${emergencyNumber}`;
-    } else {
-      phoneNumber = `telprompt:${emergencyNumber}`;
-    }
-    Linking.openURL(phoneNumber);
+    Alert.alert(
+      "Emergency Call",
+      `You are about to call ${emergencyNumber}. This will connect you to our 24/7 emergency medical assistance.`,
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Call Now",
+          style: "destructive",
+          onPress: () => {
+            setIsEmergencyActive(true);
+            let phoneNumber = '';
+            if (Platform.OS === 'android') {
+              phoneNumber = `tel:${emergencyNumber}`;
+            } else {
+              phoneNumber = `telprompt:${emergencyNumber}`;
+            }
+            Linking.openURL(phoneNumber);
+          }
+        }
+      ]
+    );
+  };
+
+  const handleVideoEmergency = () => {
+    Alert.alert(
+      "Emergency Video Call",
+      "This will initiate an emergency video consultation with available doctors. Please ensure you have a stable internet connection.",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Start Video Call",
+          style: "destructive",
+          onPress: () => {
+            setIsEmergencyActive(true);
+            Linking.openURL('https://video-call-final-git-main-orthodox-64s-projects.vercel.app/?roomID=emergency');
+          }
+        }
+      ]
+    );
   };
 
   return (
@@ -23,7 +56,7 @@ export default function EmergencyPage() {
           headerShown: false, // Hide default header
         }}
       />
-      
+
       {/* Top Section: Emergency Assistance */}
       <View style={styles.topSection}>
         <MaterialCommunityIcons name="bell-alert-outline" size={50} color="#fff" />
@@ -49,6 +82,37 @@ export default function EmergencyPage() {
             <Text style={styles.callButtonText}>Call Now</Text>
           </TouchableOpacity>
         </View>
+
+        {/* Emergency Video Call Card */}
+        <View style={styles.card}>
+          <View style={styles.cardHeader}>
+            <MaterialCommunityIcons name="video" size={24} color="#FF6B35" />
+            <Text style={styles.cardTitle}>Emergency Video Call</Text>
+          </View>
+          <Text style={styles.cardDescription}>
+            Instant video consultation with emergency doctors.
+          </Text>
+          <Text style={styles.cardDescription}>
+            Get immediate medical guidance through video call.
+          </Text>
+          <TouchableOpacity style={[styles.callButton, {backgroundColor: '#FF6B35'}]} onPress={handleVideoEmergency}>
+            <MaterialCommunityIcons name="video" size={20} color="#fff" />
+            <Text style={styles.callButtonText}>Start Video Call</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Emergency Status Indicator */}
+        {isEmergencyActive && (
+          <View style={styles.emergencyStatus}>
+            <View style={styles.emergencyStatusHeader}>
+              <MaterialCommunityIcons name="alert-circle" size={20} color="#E74C3C" />
+              <Text style={styles.emergencyStatusText}>Emergency Active</Text>
+            </View>
+            <Text style={styles.emergencyStatusDescription}>
+              Emergency services have been contacted. Help is on the way.
+            </Text>
+          </View>
+        )}
 
         {/* Additional Information Card */}
         <View style={styles.card}>
@@ -149,4 +213,28 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     lineHeight: 22,
   },
-}); 
+  emergencyStatus: {
+    backgroundColor: '#FEF2F2',
+    borderRadius: 20,
+    padding: 20,
+    marginBottom: 20,
+    borderColor: '#FCA5A5',
+    borderWidth: 1,
+  },
+  emergencyStatusHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  emergencyStatusText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#E74C3C',
+    marginLeft: 8,
+  },
+  emergencyStatusDescription: {
+    fontSize: 14,
+    color: '#B91C1C',
+    lineHeight: 20,
+  },
+});

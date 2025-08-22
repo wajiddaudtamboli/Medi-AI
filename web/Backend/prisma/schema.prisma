@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String   @id @default(cuid())
+  name            String   @db.VarChar(30)
+  contact         String   @unique
+  password        String
+  avatarPublicId  String   @default("default_avatar")
+  avatarUrl       String   @default("https://default-avatar-url.com")
+  role            String   @default("user")
+  availability    String   @default("true")
+  speciality      String   @default("general")
+  resetPasswordToken String?
+  resetPasswordExpire DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  medicalHistory     MedicalHistory[]
+  emergencyRequests  EmergencyNotification[]
+  analysisResults    AnalysisResult[] @relation("UserAnalysis")
+
+  @@map("users")
+}
+
+model MedicalHistory {
+  id          String   @id @default(cuid())
+  analysis    String
+  imageUrl    String
+  createdAt   DateTime @default(now())
+
+  // Relations
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("medical_history")
+}
+
+model EmergencyNotification {
+  id        String   @id @default(cuid())
+  status    String   @default("pending") // pending, accepted, completed
+  roomId    String
+  createdAt DateTime @default(now())
+
+  // Relations
+  patientId String
+  patient   User     @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@map("emergency_notifications")
+}
+
+model AnalysisResult {
+  id          String   @id @default(cuid())
+  type        String   // ecg, xray, cancer, alzheimer, skin, retinopathy, general
+  imageUrl    String
+  videoUrl    String?
+  analysis    String   @db.Text
+  confidence  Float?
+  recommendations String? @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // User relation (optional for anonymous analysis)
+  userId      String?
+  user        User?    @relation("UserAnalysis", fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("analysis_results")
+}

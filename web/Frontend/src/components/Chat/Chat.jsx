@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { Mail, MapPin, MessageSquare, Send } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
-import './styles/chat.css';
-import { useSelector, useDispatch } from 'react-redux';
-import { UserCircle2, MessageSquare, Send, Mail, MapPin } from 'lucide-react';
 import { allDoctors } from '../../actions/appointmentActions.js';
+import './styles/chat.css';
 
 const Chat = () => {
     const { user } = useSelector((state) => state.user);
@@ -17,7 +17,10 @@ const Chat = () => {
     const messagesEndRef = useRef(null);
 
     useEffect(() => {
-        const newSocket = io('https://agpatil.onrender.com/chat', {
+        // Don't initialize socket if user is not loaded yet
+        if (!user) return;
+
+        const newSocket = io(import.meta.env.VITE_SOCKET_URL || 'http://localhost:5002', {
             transports: ['websocket', 'polling']
         });
 
@@ -44,7 +47,7 @@ const Chat = () => {
         });
 
         return () => newSocket.disconnect();
-    }, [user]);
+    }, [user, dispatch]);
 
     useEffect(() => {
         if (!socket) return;
@@ -83,7 +86,14 @@ const Chat = () => {
 
     return (
         <div className="chat-container min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
-            {!joined ? (
+            {!user ? (
+                <div className="flex items-center justify-center min-h-[50vh]">
+                    <div className="text-center">
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                        <p className="text-gray-600">Loading user information...</p>
+                    </div>
+                </div>
+            ) : !joined ? (
                 user.role === 'patient' ? (
                     <div className="max-w-7xl mx-auto">
                         <h1 className="text-4xl font-bold text-gray-900 mb-12 text-center">
@@ -93,8 +103,8 @@ const Chat = () => {
                         </h1>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {doctors && doctors.map((doctor) => (
-                                <div 
-                                    key={doctor._id} 
+                                <div
+                                    key={doctor._id}
                                     className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100"
                                 >
                                     <div className="p-8">
@@ -116,7 +126,7 @@ const Chat = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <button 
+                                        <button
                                             onClick={() => joinDoctorRoom(doctor.contact)}
                                             className="mt-6 w-full bg-gradient-to-r from-blue-900 to-blue-700 text-white py-3 px-6 rounded-xl text-sm font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:scale-[1.02] shadow-md hover:shadow-lg flex items-center justify-center space-x-2"
                                         >

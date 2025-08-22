@@ -1,11 +1,15 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 const http = require('http');
 const { Server } = require('socket.io');
 require('dotenv').config();
+
+// Import database connection
+const prisma = require('./config/database');
+
+console.log('Initializing server with Neon PostgreSQL database...');
 
 const app = express();
 const server = http.createServer(app);
@@ -97,7 +101,7 @@ const chatRooms = new Map();
 
 io.of('/chat').on("connection", (socket) => {
     console.log("Chat user connected:", socket.id);
-    
+
     socket.on("join-room", (roomId) => {
         if (!chatRooms.has(roomId)) {
             chatRooms.set(roomId, new Set([socket.id]));
@@ -135,36 +139,107 @@ io.of('/chat').on("connection", (socket) => {
 app.set('trust proxy', true);
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: true, // Allow all origins for development
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'x-forwarded-proto'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'x-forwarded-proto', 'Origin', 'X-Requested-With'],
     exposedHeaders: ['set-cookie'],
     optionsSuccessStatus: 200
 }));
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Database connection
-mongoose.connect(process.env.MONGODB_URI);
+// Handle preflight requests explicitly
+app.options('*', cors());
+
+// Test database connection
+prisma.$connect()
+  .then(() => {
+    console.log('✅ Connected to Neon PostgreSQL database successfully');
+  })
+  .catch((error) => {
+    console.error('❌ Failed to connect to database:', error);
+  });
 
 // Routes
-const user = require('./routes/userRoute');
-app.use("/api/v1", user);
+const user = require('./routes/userRoutePrisma');
+const analysis = require('./routes/analysisRoute');
 
-// 404 handler
-app.use("/", (req, res, next) => {
-    res.status(404).json({
-        status: "fail",
-        ok: false,
-        message: "No such route founded in server...💣💣💣",
+console.log('Loading routes...');
+app.use("/api/v1", user);
+app.use("/api/v1/analysis", analysis);
+console.log('Routes loaded successfully');
+
+// Chatbot endpoint using Gemini AI
+app.post('/api/v1/chat', async (req, res) => {
+    try {
+        const { message } = req.body;
+
+        if (!message) {
+            return res.status(400).json({
+                success: false,
+                message: 'Message is required'
+            });
+        }
+
+        // Import Gemini service
+        const geminiService = require('./utils/geminiService');
+
+        // Create a health-focused prompt
+        const healthPrompt = `You are a helpful medical AI assistant for CureConnect healthcare platform.
+        Please provide helpful, accurate, and safe medical information. Always remind users to consult with healthcare professionals for serious concerns.
+
+        User message: ${message}
+
+        Please respond in a friendly, professional manner. If the question is about medical symptoms or health concerns, provide general information but emphasize the importance of professional medical consultation.`;
+
+        const response = await geminiService.analyzeText(healthPrompt);
+
+        if (response.success) {
+            res.json({
+                success: true,
+                message: response.response
+            });
+        } else {
+            res.status(500).json({
+                success: false,
+                message: 'Sorry, I encountered an error. Please try again.'
+            });
+        }
+    } catch (error) {
+        console.error('Chatbot error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Sorry, I am currently unavailable. Please try again later.'
+        });
+    }
+});
+
+// Test endpoint
+app.get('/api/v1/test', (req, res) => {
+    res.json({
+        success: true,
+        message: 'Backend is working!',
+        timestamp: new Date().toISOString(),
+        cors: 'enabled'
     });
 });
 
-// Make io accessible to routes
+// 404 handler
+app.use("*", (req, res, next) => {
+    res.status(404).json({
+        status: "fail",
+        ok: false,
+        message: "No such route found in server...💣💣💣",
+    });
+});
+
+// Make io and prisma accessible to routes
 app.set('io', io);
+app.set('prisma', prisma);
 
 // Start server
-const PORT = process.env.PORT || 5001;
-server.listen(PORT,() => console.log(`Server running on port ${PORT}`));
+const PORT = process.env.PORT || 5002;
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));

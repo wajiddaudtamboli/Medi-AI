@@ -1,32 +1,33 @@
-import { Routes, Route, Navigate } from "react-router-dom";
 import { useEffect } from "react";
-import { loadUser } from './actions/userActions.js';
 import { useSelector } from 'react-redux';
-import { persistReduxStore } from './store.js'
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { loadUser } from './actions/userActions.js';
+import Chat from "./components/Chat/Chat.jsx";
 import ChatBotButton from "./components/ChatBotButton.jsx";
-import Landing from "./pages/Landing.jsx";
+import EmergencyButton from "./components/EmergencyButton.jsx";
+import Footer from "./components/Footer";
+import HealthTips from "./components/HealthTips.jsx";
+import Navbar from "./components/Navbar";
 import LoginSignup from "./components/User/LoginSignup.jsx";
 import Profile from "./components/User/Profile.jsx";
-import HealthTips from "./components/HealthTips.jsx"
-import Chat from "./components/Chat/Chat.jsx";
 import VideoCall from "./components/VideoCall.jsx";
+import AlzheimerVideoAnalysis from "./pages/AlzheimerVideoAnalysis.jsx";
+import AlzheimerVisionAI from "./pages/Alziemer.jsx";
 import AnalysisBot from "./pages/AnalysisBot.jsx";
-import GeneralAnalysis from './pages/GeneralAnalysis.jsx';
-import SpecificAnalysis from "./pages/SpecificAnalysis.jsx";
 import AnalysisBotECG from "./pages/AnalysisBotECG.jsx";
-import ECGVideoAnalysis from './pages/ECGVideoAnalysis';
 import AnalysisBotXRAY from "./pages/AnalysisBotXRAY.jsx";
-import XRayVideoAnalysis from './pages/XRayVideoAnalysis';
-import MedicalVisionAI from "./pages/FinalCancer.jsx"
 import CancerVideoAnalysis from "./pages/CancerVideoAnalysis.jsx";
-import AlzheimerVisionAI from "./pages/Alziemer.jsx"
-import AlzheimerVideoAnalysis from "./pages/AlzheimerVideoAnalysis.jsx"
-import SkinVisionAI from "./pages/SkinAnalysis.jsx"
-import SkinVideoAnalysis from "./pages/SkinVideoAnalysis.jsx";
-import RetinolVisionAI from "./pages/Retinopathy.jsx"
+import ECGVideoAnalysis from './pages/ECGVideoAnalysis';
+import MedicalVisionAI from "./pages/FinalCancer.jsx";
+import GeneralAnalysis from './pages/GeneralAnalysis.jsx';
+import Landing from "./pages/Landing.jsx";
+import RetinolVisionAI from "./pages/Retinopathy.jsx";
 import RetinopathyVideoAnalysis from './pages/RetinopathyVideoAnalysis';
+import SkinVisionAI from "./pages/SkinAnalysis.jsx";
+import SkinVideoAnalysis from "./pages/SkinVideoAnalysis.jsx";
+import SpecificAnalysis from "./pages/SpecificAnalysis.jsx";
+import XRayVideoAnalysis from './pages/XRayVideoAnalysis';
+import { persistReduxStore } from './store.js';
 
 
 function App() {
@@ -59,7 +60,7 @@ function App() {
           <Route path='/analysis/alzheimer-video' element={<AlzheimerVideoAnalysis />}></Route>
           <Route path='/analysis/skin' element={<SkinVisionAI />}></Route>
           <Route path='/analysis/skin-video' element={<SkinVideoAnalysis />}></Route>
-          <Route path='/analysis/retinopathy' element={<RetinolVisionAI />}></Route> 
+          <Route path='/analysis/retinopathy' element={<RetinolVisionAI />}></Route>
           <Route path='/analysis/retinopathy-video' element={<RetinopathyVideoAnalysis />} />
           <Route
             path='/telemedicine'
@@ -72,6 +73,7 @@ function App() {
         </Routes>
         <Footer />
         <ChatBotButton />
+        <EmergencyButton />
       </div>
     </div>
   );

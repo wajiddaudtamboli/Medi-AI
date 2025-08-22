@@ -16,7 +16,7 @@ function Card({ icon, title, description, route, role }) {
             // Create notification first, then redirect
             if (user) {
                 axios
-                    .post("/api/v1/emergency/notify")
+                    .post("/emergency/notify")
                     .then(() => {
                         window.location.href =
                             "https://video-call-final-git-main-orthodox-64s-projects.vercel.app/?roomID=emergency";

@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect } from "react";
-import { X, Mic, Square, Globe, Send } from "lucide-react";
-import { useSelector } from "react-redux";
+import { Globe, Mic, Send, Square, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { useSelector } from "react-redux";
 import remarkGfm from 'remark-gfm';
 
 const ChatBotButton = () => {
@@ -18,7 +18,7 @@ const ChatBotButton = () => {
   const [selectedLanguage, setSelectedLanguage] = useState("en-US");
   const [showLanguageSelector, setShowLanguageSelector] = useState(false);
 
-  const API_URL = "http://172.31.4.177:8000/chat";
+  const API_URL = `${import.meta.env.VITE_API_URL?.replace('/api/v1', '') || 'http://localhost:5002'}/api/v1/chat`;
 
   // Language options
   const languageOptions = [
@@ -145,16 +145,7 @@ const ChatBotButton = () => {
       const languageCode = selectedLanguage.split("-")[0];
 
       const payload = {
-        prompt: inputMessage,
-        user_data: {
-          name: user?.name || "Guest",
-          medical_history:
-            user?.medicalHistory || "No medical history available",
-          age: user?.age || "Unknown",
-          conditions: user?.conditions || [],
-          medications: user?.medications || [],
-        },
-        language: languageCode,
+        message: inputMessage,
       };
 
       const response = await fetch(API_URL, {
@@ -171,16 +162,16 @@ const ChatBotButton = () => {
 
       const data = await response.json();
 
-      if (data.response) {
+      if (data.success && data.message) {
         setMessages((prev) => [
           ...prev,
           {
             type: "bot",
-            content: data.response,
+            content: data.message,
             timestamp: new Date().toISOString(),
           },
         ]);
-        speakResponse(data.response);
+        speakResponse(data.message);
       } else {
         throw new Error("Invalid response format");
       }
@@ -256,11 +247,10 @@ const ChatBotButton = () => {
       <div className="fixed bottom-8 right-8 z-50">
         <button
           onClick={toggleChat}
-          className={`w-16 h-16 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 transform ${
-            isOpen
+          className={`w-16 h-16 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 transform ${isOpen
               ? "rotate-90 bg-rose-500"
               : "bg-gradient-to-br from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700"
-          }`}
+            }`}
         >
           {isOpen ? (
             <X className="w-6 h-6 text-white" />
@@ -329,11 +319,10 @@ const ChatBotButton = () => {
                 <button
                   key={lang.code}
                   onClick={() => selectLanguage(lang.code)}
-                  className={`w-full text-left px-4 py-2 text-sm hover:bg-indigo-50 transition-colors ${
-                    selectedLanguage === lang.code
+                  className={`w-full text-left px-4 py-2 text-sm hover:bg-indigo-50 transition-colors ${selectedLanguage === lang.code
                       ? "bg-indigo-100 text-indigo-700 font-medium"
                       : "text-gray-700"
-                  }`}
+                    }`}
                 >
                   {lang.name}
                 </button>
@@ -351,35 +340,19 @@ const ChatBotButton = () => {
               {messages.map((message, index) => (
                 <div
                   key={index}
-                  className={`flex ${
-                    message.type === "user" ? "justify-end" : "justify-start"
-                  }`}
+                  className={`flex ${message.type === "user" ? "justify-end" : "justify-start"
+                    } mb-4`}
                 >
                   <div
-                    className={`max-w-[85%] rounded-2xl p-4 transition-all duration-200 ${
-                      message.type === "user"
-                        ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-br-none shadow-md"
-                        : "bg-white text-gray-800 border border-gray-200 rounded-bl-none shadow-sm"
-                    }`}
+                    className={`max-w-[70%] rounded-lg p-3 ${message.type === "user"
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-100 text-gray-800"
+                      }`}
                   >
-                    <p className="text-sm whitespace-pre-wrap">
-                      <ReactMarkdown>
+                    <div className="prose prose-sm max-w-none">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
                         {message.content}
                       </ReactMarkdown>
-                    </p>
-                    <div
-                      className={`text-xs mt-1.5 ${
-                        message.type === "user"
-                          ? "text-indigo-200"
-                          : "text-gray-500"
-                      }`}
-                    >
-                      {new Date(
-                        message.timestamp || new Date()
-                      ).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
                     </div>
                   </div>
                 </div>
@@ -413,11 +386,10 @@ const ChatBotButton = () => {
               <button
                 type="button"
                 onClick={toggleListening}
-                className={`p-3 rounded-full transition-all ${
-                  isListening
+                className={`p-3 rounded-full transition-all ${isListening
                     ? "bg-rose-500 text-white animate-pulse"
                     : "bg-gray-100 hover:bg-gray-200 text-gray-600"
-                }`}
+                  }`}
               >
                 <Mic className="w-4 h-4" />
               </button>
@@ -432,11 +404,10 @@ const ChatBotButton = () => {
               <button
                 type="submit"
                 disabled={isLoading || !inputMessage.trim()}
-                className={`p-3 rounded-full transition-all ${
-                  isLoading || !inputMessage.trim()
+                className={`p-3 rounded-full transition-all ${isLoading || !inputMessage.trim()
                     ? "bg-gray-300 text-gray-500"
                     : "bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white shadow-md"
-                }`}
+                  }`}
               >
                 <Send className="w-4 h-4" />
               </button>

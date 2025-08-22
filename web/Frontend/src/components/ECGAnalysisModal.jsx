@@ -15,41 +15,64 @@ function ECGAnalysisModal({ isOpen, onClose }) {
         onClose();
     };
 
+    const analyzeImage = async (imageFile) => {
+        try {
+            const formData = new FormData();
+            formData.append('image', imageFile);
+
+            const response = await fetch(`${import.meta.env.VITE_API_URL?.replace('/api/v1', '') || 'http://localhost:5002'}/api/v1/analyze/ecg`, {
+                method: 'POST',
+                body: formData,
+                credentials: 'include'
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error processing the image:', error);
+            throw error;
+        }
+    };
+
     const backdropVariants = {
         hidden: { opacity: 0 },
-        visible: { 
+        visible: {
             opacity: 1,
             transition: { duration: 0.3, ease: "easeOut" }
         },
-        exit: { 
+        exit: {
             opacity: 0,
             transition: { duration: 0.2, ease: "easeIn" }
         }
     };
 
     const modalVariants = {
-        hidden: { 
-            opacity: 0, 
-            scale: 0.8, 
+        hidden: {
+            opacity: 0,
+            scale: 0.8,
             y: 50,
             rotateX: -15
         },
-        visible: { 
-            opacity: 1, 
-            scale: 1, 
+        visible: {
+            opacity: 1,
+            scale: 1,
             y: 0,
             rotateX: 0,
-            transition: { 
-                duration: 0.4, 
+            transition: {
+                duration: 0.4,
                 ease: "easeOut",
                 type: "spring",
                 damping: 25,
                 stiffness: 300
             }
         },
-        exit: { 
-            opacity: 0, 
-            scale: 0.9, 
+        exit: {
+            opacity: 0,
+            scale: 0.9,
             y: 30,
             transition: { duration: 0.2, ease: "easeIn" }
         }
@@ -57,8 +80,8 @@ function ECGAnalysisModal({ isOpen, onClose }) {
 
     const headerVariants = {
         hidden: { opacity: 0, y: -20 },
-        visible: { 
-            opacity: 1, 
+        visible: {
+            opacity: 1,
             y: 0,
             transition: { delay: 0.2, duration: 0.3 }
         }
@@ -78,26 +101,26 @@ function ECGAnalysisModal({ isOpen, onClose }) {
 
     const cardVariants = {
         hidden: { opacity: 0, x: -30, scale: 0.95 },
-        visible: { 
-            opacity: 1, 
-            x: 0, 
+        visible: {
+            opacity: 1,
+            x: 0,
             scale: 1,
-            transition: { 
+            transition: {
                 duration: 0.4,
                 ease: "easeOut",
                 type: "spring",
                 damping: 20
             }
         },
-        hover: { 
+        hover: {
             scale: 1.03,
             y: -5,
-            transition: { 
+            transition: {
                 duration: 0.2,
                 ease: "easeOut"
             }
         },
-        tap: { 
+        tap: {
             scale: 0.98,
             transition: { duration: 0.1 }
         }
@@ -105,16 +128,16 @@ function ECGAnalysisModal({ isOpen, onClose }) {
 
     const iconVariants = {
         hidden: { scale: 0, rotate: -180 },
-        visible: { 
-            scale: 1, 
+        visible: {
+            scale: 1,
             rotate: 0,
-            transition: { 
+            transition: {
                 delay: 0.2,
                 duration: 0.3,
                 ease: "easeOut"
             }
         },
-        hover: { 
+        hover: {
             scale: 1.1,
             rotate: 5,
             transition: { duration: 0.2 }
@@ -159,7 +182,7 @@ function ECGAnalysisModal({ isOpen, onClose }) {
             {isOpen && (
                 <>
                     {/* Backdrop */}
-                    <motion.div 
+                    <motion.div
                         className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50"
                         variants={backdropVariants}
                         initial="hidden"
@@ -168,7 +191,7 @@ function ECGAnalysisModal({ isOpen, onClose }) {
                         onClick={onClose}
                     >
                         {/* Modal Container */}
-                        <motion.div 
+                        <motion.div
                             className="bg-white rounded-3xl p-8 w-full max-w-md relative shadow-2xl border border-gray-100"
                             variants={modalVariants}
                             initial="hidden"
@@ -210,7 +233,7 @@ function ECGAnalysisModal({ isOpen, onClose }) {
                             </div>
 
                             {/* Header */}
-                            <motion.div 
+                            <motion.div
                                 className="text-center mb-8"
                                 variants={headerVariants}
                                 initial="hidden"
@@ -230,7 +253,7 @@ function ECGAnalysisModal({ isOpen, onClose }) {
                                     </motion.div>
                                 </motion.div>
 
-                                <motion.h2 
+                                <motion.h2
                                     className="text-3xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-2"
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -239,7 +262,7 @@ function ECGAnalysisModal({ isOpen, onClose }) {
                                     ECG Analysis
                                 </motion.h2>
 
-                                <motion.p 
+                                <motion.p
                                     className="text-gray-500 text-sm"
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
@@ -250,14 +273,14 @@ function ECGAnalysisModal({ isOpen, onClose }) {
                             </motion.div>
 
                             {/* Analysis Options */}
-                            <motion.div 
+                            <motion.div
                                 className="space-y-4"
                                 variants={cardContainerVariants}
                                 initial="hidden"
                                 animate="visible"
                             >
                                 {/* Image Analysis Card */}
-                                <motion.div 
+                                <motion.div
                                     onClick={handleImageAnalysis}
                                     className="group cursor-pointer bg-gradient-to-r from-emerald-50 via-emerald-50 to-green-50 rounded-2xl p-6 border-2 border-emerald-200/50 hover:border-emerald-400/80 transition-all duration-300 relative overflow-hidden"
                                     variants={cardVariants}
@@ -273,7 +296,7 @@ function ECGAnalysisModal({ isOpen, onClose }) {
                                     />
 
                                     <div className="relative flex items-center space-x-4">
-                                        <motion.div 
+                                        <motion.div
                                             className="p-3 bg-emerald-500/10 rounded-xl border border-emerald-200"
                                             variants={iconVariants}
                                             whileHover="hover"
@@ -282,7 +305,7 @@ function ECGAnalysisModal({ isOpen, onClose }) {
                                         </motion.div>
 
                                         <div className="flex-1">
-                                            <motion.h3 
+                                            <motion.h3
                                                 className="text-lg font-bold text-emerald-800 mb-1"
                                                 initial={{ opacity: 0, x: -10 }}
                                                 animate={{ opacity: 1, x: 0 }}
@@ -290,7 +313,7 @@ function ECGAnalysisModal({ isOpen, onClose }) {
                                             >
                                                 Image Analysis
                                             </motion.h3>
-                                            <motion.p 
+                                            <motion.p
                                                 className="text-sm text-emerald-600/80"
                                                 initial={{ opacity: 0, x: -10 }}
                                                 animate={{ opacity: 1, x: 0 }}
@@ -314,7 +337,7 @@ function ECGAnalysisModal({ isOpen, onClose }) {
                                 </motion.div>
 
                                 {/* Video Analysis Card */}
-                                <motion.div 
+                                <motion.div
                                     onClick={handleVideoAnalysis}
                                     className="group cursor-pointer bg-gradient-to-r from-red-50 via-red-50 to-rose-50 rounded-2xl p-6 border-2 border-red-200/50 hover:border-red-400/80 transition-all duration-300 relative overflow-hidden"
                                     variants={cardVariants}
@@ -330,7 +353,7 @@ function ECGAnalysisModal({ isOpen, onClose }) {
                                     />
 
                                     <div className="relative flex items-center space-x-4">
-                                        <motion.div 
+                                        <motion.div
                                             className="p-3 bg-red-500/10 rounded-xl border border-red-200"
                                             variants={iconVariants}
                                             whileHover="hover"
@@ -339,7 +362,7 @@ function ECGAnalysisModal({ isOpen, onClose }) {
                                         </motion.div>
 
                                         <div className="flex-1">
-                                            <motion.h3 
+                                            <motion.h3
                                                 className="text-lg font-bold text-red-800 mb-1"
                                                 initial={{ opacity: 0, x: -10 }}
                                                 animate={{ opacity: 1, x: 0 }}
@@ -347,7 +370,7 @@ function ECGAnalysisModal({ isOpen, onClose }) {
                                             >
                                                 Video Analysis
                                             </motion.h3>
-                                            <motion.p 
+                                            <motion.p
                                                 className="text-sm text-red-600/80"
                                                 initial={{ opacity: 0, x: -10 }}
                                                 animate={{ opacity: 1, x: 0 }}
@@ -372,7 +395,7 @@ function ECGAnalysisModal({ isOpen, onClose }) {
                             </motion.div>
 
                             {/* Footer */}
-                            <motion.div 
+                            <motion.div
                                 className="mt-6 text-center"
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}

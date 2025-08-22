@@ -1,15 +1,13 @@
-import { useState, useRef, useEffect } from "react";
-import { Upload, MessageSquare, Image, Download, RefreshCw, Sparkles, Camera, X, Play, Square } from "lucide-react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import AnalysisResults from '../components/AnalysisResults';
 import jsPDF from 'jspdf';
+import { Camera, RefreshCw, Upload, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import AnalysisResults from '../components/AnalysisResults';
 
 // Initialize Gemini AI
-const genAI = new GoogleGenerativeAI("AIzaSyASSY9fkUZY2Q9cYsCd-mTMK0sr98lPh30");
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GOOGLE_AI_API_KEY);
 
 const uploadToCloudinary = async (file) => {
     // Simulate upload delay
@@ -21,7 +19,7 @@ const simplifyAnalysis = async (medicalAnalysis) => {
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
-        const prompt = `You are a medical translator who specializes in explaining complex medical terms in simple, easy-to-understand language. 
+        const prompt = `You are a medical translator who specializes in explaining complex medical terms in simple, easy-to-understand language.
         Please convert this medical analysis into simple terms that someone without a medical background can understand.
         Keep the same structure but use everyday language. Here's the analysis:
 
@@ -57,8 +55,8 @@ const analyzeImage = async (imageUrl, problemDescription = '') => {
         );
 
         // Create the prompt with context
-        let prompt = `You are an experienced general medical practitioner. Analyze this medical image and provide a detailed assessment. 
-        Focus on identifying any visible conditions, abnormalities, or concerns. 
+        let prompt = `You are an experienced general medical practitioner. Analyze this medical image and provide a detailed assessment.
+        Focus on identifying any visible conditions, abnormalities, or concerns.
         Structure your response in the following format:
         1. Emergency Level (1 for high emergency, 2 for moderate emergency, 3 for low emergency)
         2. Medical Condition Detected (if any)

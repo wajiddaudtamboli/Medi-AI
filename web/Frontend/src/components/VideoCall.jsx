@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { Activity, AlertCircle, AlertTriangle, Battery, Bell, CheckCircle, Clock, Eye, Heart, MessageSquare, Monitor, Phone, Shield, Signal, User, Wifi, Zap } from 'lucide-react';
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import axios from '../axios';
-import { io } from "socket.io-client";
-import { toast } from "react-toastify";
-import { Video, MessageSquare, AlertTriangle, Clock, User, Phone, Bell, Activity, Shield, Heart, Zap, Eye, CheckCircle, AlertCircle, Wifi, Signal, Battery, Monitor } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
+import { io } from "socket.io-client";
+import axios from '../axios';
 
 const VideoCall = () => {
     const { user } = useSelector((state) => state.user);
@@ -20,7 +20,7 @@ const VideoCall = () => {
         }, 1000);
 
         // Connect to socket server
-        const socket = io("https://agpatil.onrender.com/");
+        const socket = io(import.meta.env.VITE_SOCKET_URL || "http://localhost:5001");
 
         if (user?.role === "doctor") {
             // Listen for emergency notifications
