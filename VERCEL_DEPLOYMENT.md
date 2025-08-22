@@ -12,8 +12,8 @@
 
 ```bash
 DATABASE_URL=postgresql://your_neon_connection_string
-JWT_SECRET=your-super-secret-jwt-key-minimum-32-characters
-GOOGLE_AI_API_KEY=AIzaSyDOAtf0gqqMJpu5nVaSEbutTOpK_GZN7mo
+JWT_SECRET=your-super-secret-jwt-key-minimum-32-characters  
+GOOGLE_AI_API_KEY=your-google-ai-api-key
 TWILIO_ACCOUNT_SID=your-twilio-account-sid (optional)
 TWILIO_AUTH_TOKEN=your-twilio-auth-token (optional)
 ```
