@@ -6,16 +6,16 @@ import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
 import React, { useEffect, useState } from 'react';
 import {
-  ActivityIndicator,
-  Alert,
-  Dimensions,
-  Image,
-  Platform,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    ActivityIndicator,
+    Alert,
+    Dimensions,
+    Image,
+    Platform,
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -75,7 +75,7 @@ const uploadToCloudinary = async (imageUri: string): Promise<string> => {
 
 const formatAnalysisResults = (rawResult: string): string => {
   const lines = rawResult.split('\n').filter(line => line.trim() !== '');
-  
+
   const formattedLines = lines.map(line => {
     if (line.toLowerCase().includes('alzheimer')) {
       return `**${line}**`;
@@ -97,7 +97,7 @@ const analyzeImage = async (imageUrl: string, analysisType: string): Promise<str
     const prompt = analysisPrompts[analysisType] || analysisPrompts.alzheimer; // Default to Alzheimer if type not found
     const fetchResponse = await fetch(imageUrl);
     const blob = await fetchResponse.blob();
-    
+
     // Convert blob to base64
     const base64Data = await new Promise<string>((resolve, reject) => {
       const reader = new FileReader();
@@ -111,7 +111,7 @@ const analyzeImage = async (imageUrl: string, analysisType: string): Promise<str
     });
 
     const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
-    
+
     const result = await model.generateContent([
       prompt,
       {
@@ -134,7 +134,7 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
   try {
     const currentDate = new Date().toLocaleString();
     const reportId = `RPT-${Date.now()}`;
-    
+
     // Enhanced HTML template with beautiful styling
     const htmlContent = `
 <!DOCTYPE html>
@@ -145,13 +145,13 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
     <title>CT Scan Analysis Report</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
@@ -160,7 +160,7 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
             min-height: 100vh;
             padding: 20px;
         }
-        
+
         .report-container {
             max-width: 800px;
             margin: 0 auto;
@@ -169,7 +169,7 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
             overflow: hidden;
         }
-        
+
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -177,7 +177,7 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
             text-align: center;
             position: relative;
         }
-        
+
         .header::before {
             content: '';
             position: absolute;
@@ -187,7 +187,7 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
             bottom: 0;
             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.15"/><circle cx="20" cy="80" r="0.5" fill="white" opacity="0.15"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grain)"/></svg>');
         }
-        
+
         .logo {
             font-size: 28px;
             font-weight: 700;
@@ -195,7 +195,7 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
             position: relative;
             z-index: 1;
         }
-        
+
         .subtitle {
             font-size: 16px;
             opacity: 0.9;
@@ -203,25 +203,25 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
             position: relative;
             z-index: 1;
         }
-        
+
         .report-meta {
             background: #f8fafc;
             padding: 25px 30px;
             border-bottom: 2px solid #e2e8f0;
         }
-        
+
         .meta-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
-        
+
         .meta-item {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        
+
         .meta-label {
             font-weight: 600;
             color: #4a5568;
@@ -229,16 +229,16 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         .meta-value {
             color: #2d3748;
             font-weight: 500;
         }
-        
+
         .content-section {
             padding: 30px;
         }
-        
+
         .section-title {
             font-size: 20px;
             font-weight: 600;
@@ -248,7 +248,7 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
             border-bottom: 3px solid #667eea;
             display: inline-block;
         }
-        
+
         .analysis-card {
             background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
             border-radius: 15px;
@@ -257,13 +257,13 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
             margin-bottom: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
-        
+
         .analysis-content {
             font-size: 15px;
             line-height: 1.8;
             white-space: pre-line;
         }
-        
+
         .highlight {
             background: linear-gradient(120deg, #667eea 0%, #764ba2 100%);
             -webkit-background-clip: text;
@@ -272,7 +272,7 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
             font-weight: 600;
             padding: 2px 0;
         }
-        
+
         .image-section {
             text-align: center;
             margin: 25px 0;
@@ -280,7 +280,7 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
             background: #f8fafc;
             border-radius: 15px;
         }
-        
+
         .scan-image {
             max-width: 100%;
             height: auto;
@@ -288,13 +288,13 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
             margin-bottom: 15px;
         }
-        
+
         .image-caption {
             font-size: 14px;
             color: #718096;
             font-style: italic;
         }
-        
+
         .disclaimer {
             background: #fff5f5;
             border: 1px solid #feb2b2;
@@ -302,38 +302,38 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
             padding: 20px;
             margin-top: 25px;
         }
-        
+
         .disclaimer-title {
             font-weight: 600;
             color: #c53030;
             margin-bottom: 8px;
             font-size: 16px;
         }
-        
+
         .disclaimer-text {
             color: #744210;
             font-size: 14px;
             line-height: 1.6;
         }
-        
+
         .footer {
             background: #2d3748;
             color: white;
             padding: 25px 30px;
             text-align: center;
         }
-        
+
         .footer-text {
             font-size: 13px;
             opacity: 0.8;
             margin-bottom: 8px;
         }
-        
+
         .footer-logo {
             font-weight: 600;
             font-size: 16px;
         }
-        
+
         .status-badge {
             display: inline-block;
             padding: 6px 12px;
@@ -346,13 +346,13 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
             color: white;
             margin: 10px 0;
         }
-        
+
         @media print {
             body {
                 background: white;
                 padding: 0;
             }
-            
+
             .report-container {
                 box-shadow: none;
                 border-radius: 0;
@@ -367,7 +367,7 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
             <div class="logo">🏥 CureConnect</div>
             <div class="subtitle">AI-Powered Medical Image Analysis Report</div>
         </div>
-        
+
         <!-- Report Metadata -->
         <div class="report-meta">
             <div class="meta-grid">
@@ -389,7 +389,7 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
                 </div>
             </div>
         </div>
-        
+
         <!-- Main Content -->
         <div class="content-section">
             ${imageUrl ? `
@@ -398,12 +398,12 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
                 <div class="image-caption">Analyzed CT Scan Image</div>
             </div>
             ` : ''}
-            
+
             <h2 class="section-title">🧠 Analysis Results</h2>
             <div class="analysis-card">
                 <div class="analysis-content">${analysis.replace(/\*\*(.*?)\*\*/g, '<span class="highlight">$1</span>')}</div>
             </div>
-            
+
             <h2 class="section-title">📋 Clinical Notes</h2>
             <div class="analysis-card">
                 <div class="analysis-content">
@@ -413,19 +413,19 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
 • Confidence scores reflect the AI model's certainty in the analysis
                 </div>
             </div>
-            
+
             <!-- Disclaimer -->
             <div class="disclaimer">
                 <div class="disclaimer-title">⚠️ Important Medical Disclaimer</div>
                 <div class="disclaimer-text">
-                    This report is generated by an AI system for demonstration purposes only. 
-                    It should not be used as a substitute for professional medical diagnosis or treatment. 
-                    Always consult with qualified healthcare professionals for medical decisions. 
+                    This report is generated by an AI system for demonstration purposes only.
+                    It should not be used as a substitute for professional medical diagnosis or treatment.
+                    Always consult with qualified healthcare professionals for medical decisions.
                     The AI analysis is intended to assist healthcare providers and should be validated by medical experts.
                 </div>
             </div>
         </div>
-        
+
         <!-- Footer -->
         <div class="footer">
             <div class="footer-text">Report generated on ${currentDate}</div>
@@ -473,7 +473,7 @@ const generatePDF = async (analysis: string, imageUrl?: string): Promise<boolean
   } catch (error) {
     console.error('Error generating PDF:', error);
     Alert.alert(
-      '❌ PDF Generation Failed', 
+      '❌ PDF Generation Failed',
       'Unable to generate the report. Please check your device storage and try again.'
     );
     return false;
@@ -506,7 +506,7 @@ const CureConnectApp: React.FC = () => {
     const { status: cameraStatus } = await ImagePicker.requestCameraPermissionsAsync();
     const { status: mediaStatus } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     const { status: mediaLibraryStatus } = await MediaLibrary.requestPermissionsAsync();
-    
+
     if (cameraStatus !== 'granted' || mediaStatus !== 'granted') {
       Alert.alert('Permission needed', 'Camera and media library permissions are required.');
     }
@@ -622,7 +622,7 @@ const CureConnectApp: React.FC = () => {
         </View>
       </View>
 
-      <KeyboardAwareScrollView 
+      <KeyboardAwareScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
@@ -694,7 +694,7 @@ const CureConnectApp: React.FC = () => {
               </View>
             )}
           </View>
-          
+
           {analysis && (
             <TouchableOpacity
               style={styles.bottomPdfButton}

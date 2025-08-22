@@ -1,14 +1,14 @@
-import { useState, useRef, useEffect } from 'react';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import axios from 'axios';
-import Header from '../components/Header';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { useSelector, useDispatch } from 'react-redux';
-import { addMedicalHistory } from '../actions/userActions';
-import Disclaimer from '../components/Disclaimer';
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import AnalysisResults from '../components/AnalysisResults';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { addMedicalHistory } from '../actions/userActions';
+import AnalysisResults from '../components/AnalysisResults';
+import Disclaimer from '../components/Disclaimer';
+import Header from '../components/Header';
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GOOGLE_AI_API_KEY);
 
@@ -86,7 +86,7 @@ function RetinopathyVideoAnalysis() {
             // Upload video to Cloudinary
             const videoUrl = await uploadToCloudinary(selectedVideo);
             console.log(videoUrl);
-            
+
             // Send to backend for analysis
             const response = await axios.post('http://172.31.4.177:5050/analyze', {
                 video_url: videoUrl,
@@ -184,7 +184,7 @@ function RetinopathyVideoAnalysis() {
                     console.error('Error adding logo to PDF:', error);
                 }
             }
-            
+
             doc.setFontSize(16);
             doc.setFont("helvetica", "bold");
             doc.setTextColor(0, 51, 102); // Dark blue color for header
@@ -200,7 +200,7 @@ function RetinopathyVideoAnalysis() {
                     pageHeight - 10,
                     { align: 'center' }
                 );
-                
+
                 if (logoImageData) {
                     try {
                         doc.addImage(logoImageData, 'PNG', pageWidth - margin - 20, pageHeight - 15, 10, 10);
@@ -229,7 +229,7 @@ function RetinopathyVideoAnalysis() {
             doc.setFont("helvetica", "bold");
             doc.setTextColor(51, 51, 51);
             doc.text("Patient Information", margin, yPosition);
-            
+
             yPosition += 10;
             doc.setFontSize(12);
             doc.setFont("helvetica", "normal");
@@ -249,23 +249,23 @@ function RetinopathyVideoAnalysis() {
             doc.setFont("helvetica", "normal");
             doc.setFontSize(12);
             doc.setTextColor(51, 51, 51);
-            
+
             const splitText = doc.splitTextToSize(analysis, pageWidth - (2 * margin));
-            
+
             // Check if text might overflow to next page
             if (yPosition + (splitText.length * 7) > pageHeight - margin) {
                 addFooter();
                 doc.addPage();
-                
+
                 // Add background to new page
                 doc.setFillColor(208, 235, 255);
                 doc.rect(0, 0, pageWidth, pageHeight, 'F');
-                
+
                 yPosition = margin;
             }
-            
+
             doc.text(splitText, margin, yPosition);
-            
+
             // Add a box around the analysis text
             const textHeight = splitText.length * 7;
             doc.setDrawColor(0, 102, 204);
@@ -284,7 +284,7 @@ function RetinopathyVideoAnalysis() {
             // Save the PDF with a proper filename
             const filename = `Retinopathy_Video_Report_${user?.name?.replace(/\s+/g, '_') || 'Patient'}_${new Date().toLocaleDateString().replace(/\//g, '-')}.pdf`;
             doc.save(filename);
-            
+
             return true;
         } catch (error) {
             console.error('Error generating PDF:', error);
@@ -295,11 +295,11 @@ function RetinopathyVideoAnalysis() {
 
     const formatAnalysisResults = (text) => {
         const lines = text.split('\n').filter(line => line.trim() !== '');
-        
+
         return lines.map((line, index) => {
             // Remove asterisks and format based on content
             const cleanLine = line.replace(/\*\*/g, '');
-            
+
             if (cleanLine.match(/^(Medical Condition|Confidence Score|Type|Affected Region|Recommendation|Additional Observations)/i)) {
                 return {
                     type: 'header',
@@ -316,8 +316,8 @@ function RetinopathyVideoAnalysis() {
     const simplifyAnalysis = async (medicalAnalysis) => {
         try {
             const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-            
-            const prompt = `You are a medical translator who specializes in explaining complex medical terms in simple, easy-to-understand language. 
+
+            const prompt = `You are a medical translator who specializes in explaining complex medical terms in simple, easy-to-understand language.
             Please convert this medical analysis into simple terms that someone without a medical background can understand.
             Keep the same structure but use everyday language. Here's the analysis:
 
@@ -343,7 +343,7 @@ function RetinopathyVideoAnalysis() {
             const base64Image = await new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(blob);
-                reader.onloadend = () => resolve(reader.result.split(",")[1]); 
+                reader.onloadend = () => resolve(reader.result.split(",")[1]);
                 reader.onerror = reject;
             });
 
@@ -364,7 +364,7 @@ function RetinopathyVideoAnalysis() {
 
     const handleSimplify = async () => {
         if (!analysis) return;
-        
+
         setIsAnalyzing(true);
         try {
             const simplifiedAnalysis = await simplifyAnalysis(analysis);
@@ -382,7 +382,7 @@ function RetinopathyVideoAnalysis() {
         <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
             <div className="max-w-4xl mx-auto px-4 py-8">
                 <Header />
-                
+
                 <div className="bg-white rounded-2xl shadow-xl p-6 mb-8">
                     {/* Video Upload Section */}
                     <div className="mb-8">
@@ -410,21 +410,21 @@ function RetinopathyVideoAnalysis() {
                                 </div>
                             ) : (
                                 <div className="flex flex-col items-center">
-                                    <video 
-                                        src={videoPreview} 
-                                        controls 
+                                    <video
+                                        src={videoPreview}
+                                        controls
                                         className="max-h-64 max-w-full mb-4 rounded-lg shadow-md"
                                     />
                                     <div className="flex space-x-4">
-                                        <button 
-                                            onClick={handleUploadAndAnalyze} 
+                                        <button
+                                            onClick={handleUploadAndAnalyze}
                                             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
                                             disabled={isAnalyzing}
                                         >
                                             {isAnalyzing ? "Analyzing..." : "Analyze Video"}
                                         </button>
-                                        <button 
-                                            onClick={resetAnalysis} 
+                                        <button
+                                            onClick={resetAnalysis}
                                             className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg transition-colors"
                                         >
                                             Reset
@@ -434,7 +434,7 @@ function RetinopathyVideoAnalysis() {
                             )}
                         </div>
                     </div>
-                    
+
                     {/* Analysis Results Section */}
                     <div className="bg-gray-50 rounded-xl p-6">
                         <AnalysisResults
@@ -451,7 +451,7 @@ function RetinopathyVideoAnalysis() {
                         />
                     </div>
                 </div>
-                
+
                 <Disclaimer />
 
                 {showRedirect && emergencyLevel && (
@@ -470,7 +470,7 @@ function RetinopathyVideoAnalysis() {
                                  emergencyLevel === 2 ? 'Moderate Emergency - Prompt medical attention needed' :
                                  'Low Emergency - Routine care recommended'}
                             </p>
-                            
+
                             {!isRedirecting ? (
                                 <div className="flex gap-4 justify-center mt-6">
                                     <button
@@ -481,8 +481,8 @@ function RetinopathyVideoAnalysis() {
                                             'bg-green-600 hover:bg-green-700'
                                         }`}
                                     >
-                                        Proceed to {emergencyLevel === 1 ? 'Emergency' : 
-                                                   emergencyLevel === 2 ? 'Telemedicine' : 
+                                        Proceed to {emergencyLevel === 1 ? 'Emergency' :
+                                                   emergencyLevel === 2 ? 'Telemedicine' :
                                                    'Chat'}
                                     </button>
                                     <button
@@ -499,7 +499,7 @@ function RetinopathyVideoAnalysis() {
                                     </p>
                                     <div className="mt-4">
                                         <div className="w-full bg-gray-200 rounded-full h-2.5">
-                                            <div 
+                                            <div
                                                 className="h-2.5 rounded-full transition-all duration-1000"
                                                 style={{
                                                     width: `${(countdown / 5) * 100}%`,
@@ -520,4 +520,4 @@ function RetinopathyVideoAnalysis() {
     );
 }
 
-export default RetinopathyVideoAnalysis; 
+export default RetinopathyVideoAnalysis;

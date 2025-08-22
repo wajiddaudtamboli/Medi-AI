@@ -1,15 +1,15 @@
-import { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import axios from 'axios';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import Header from '../components/Header';
-import ImageUpload from '../components/ImageUpload';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import AnalysisResults from '../components/AnalysisResults';
 import Disclaimer from '../components/Disclaimer';
-import { useSelector, useDispatch } from 'react-redux';
-import { addMedicalHistory, getMedicalHistory } from "./../actions/userActions";
-import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
+import ImageUpload from '../components/ImageUpload';
+import { addMedicalHistory } from "./../actions/userActions";
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GOOGLE_AI_API_KEY);
 
@@ -38,7 +38,7 @@ function AnalysisBotECG() {
                 const img = new Image();
                 img.crossOrigin = 'Anonymous';
                 img.src = './logo.png';
-                
+
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
                     canvas.width = img.width;
@@ -108,7 +108,7 @@ function AnalysisBotECG() {
             const data = await response.json();
             if (response.ok) {
                 setAnalysis(data.prediction);
-                
+
                 // Extract emergency level from the analysis
                 const emergencyLevelMatch = data.prediction.match(/Emergency Level:\s*(\d)/i);
                 const level = emergencyLevelMatch ? parseInt(emergencyLevelMatch[1]) : 3;
@@ -155,7 +155,7 @@ function AnalysisBotECG() {
                     console.error('Error adding logo to PDF:', error);
                 }
             }
-            
+
             doc.setFontSize(16);
             doc.setFont("helvetica", "bold");
             doc.setTextColor(0, 51, 102); // Dark blue color for header
@@ -171,7 +171,7 @@ function AnalysisBotECG() {
                     pageHeight - 10,
                     { align: 'center' }
                 );
-                
+
                 if (logoImageData) {
                     try {
                         doc.addImage(logoImageData, 'PNG', pageWidth - margin - 20, pageHeight - 15, 10, 10);
@@ -200,7 +200,7 @@ function AnalysisBotECG() {
             doc.setFont("helvetica", "bold");
             doc.setTextColor(51, 51, 51);
             doc.text("Patient Information", margin, yPosition);
-            
+
             yPosition += 10;
             doc.setFontSize(12);
             doc.setFont("helvetica", "normal");
@@ -220,23 +220,23 @@ function AnalysisBotECG() {
             doc.setFont("helvetica", "normal");
             doc.setFontSize(12);
             doc.setTextColor(51, 51, 51);
-            
+
             const splitText = doc.splitTextToSize(analysis, pageWidth - (2 * margin));
-            
+
             // Check if text might overflow to next page
             if (yPosition + (splitText.length * 7) > pageHeight - margin) {
                 addFooter();
                 doc.addPage();
-                
+
                 // Add background to new page
                 doc.setFillColor(208, 235, 255);
                 doc.rect(0, 0, pageWidth, pageHeight, 'F');
-                
+
                 yPosition = margin;
             }
-            
+
             doc.text(splitText, margin, yPosition);
-            
+
             // Add a box around the analysis text
             const textHeight = splitText.length * 7;
             doc.setDrawColor(0, 102, 204);
@@ -255,7 +255,7 @@ function AnalysisBotECG() {
             // Save the PDF with a proper filename
             const filename = `ECG_Report_${user?.name?.replace(/\s+/g, '_') || 'Patient'}_${new Date().toLocaleDateString().replace(/\//g, '-')}.pdf`;
             doc.save(filename);
-            
+
             return true;
         } catch (error) {
             console.error('Error generating PDF:', error);
@@ -275,11 +275,11 @@ function AnalysisBotECG() {
 
     const formatAnalysisResults = (text) => {
         const lines = text.split('\n').filter(line => line.trim() !== '');
-        
+
         return lines.map((line, index) => {
             // Remove asterisks and format based on content
             const cleanLine = line.replace(/\*\*/g, '');
-            
+
             if (cleanLine.match(/^(Medical Condition|Confidence Score|Type|Affected Region|Recommendation|Additional Observations)/i)) {
                 return {
                     type: 'header',
@@ -296,8 +296,8 @@ function AnalysisBotECG() {
     const simplifyAnalysis = async (medicalAnalysis) => {
         try {
             const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-            
-            const prompt = `You are a medical translator who specializes in explaining complex medical terms in simple, easy-to-understand language. 
+
+            const prompt = `You are a medical translator who specializes in explaining complex medical terms in simple, easy-to-understand language.
             Please convert this medical analysis into simple terms that someone without a medical background can understand.
             Keep the same structure but use everyday language. Here's the analysis:
 
@@ -316,7 +316,7 @@ function AnalysisBotECG() {
 
     const handleSimplify = async () => {
         if (!analysis) return;
-        
+
         setIsSimplifying(true);
         try {
             const simplifiedAnalysis = await simplifyAnalysis(analysis);
@@ -403,7 +403,7 @@ function AnalysisBotECG() {
                                  emergencyLevel === 2 ? 'Moderate Emergency - Prompt medical attention needed' :
                                  'Low Emergency - Routine care recommended'}
                             </p>
-                            
+
                             {!isRedirecting ? (
                                 <div className="flex gap-4 justify-center mt-6">
                                     <button
@@ -414,8 +414,8 @@ function AnalysisBotECG() {
                                             'bg-green-600 hover:bg-green-700'
                                         }`}
                                     >
-                                        Proceed to {emergencyLevel === 1 ? 'Emergency' : 
-                                                   emergencyLevel === 2 ? 'Telemedicine' : 
+                                        Proceed to {emergencyLevel === 1 ? 'Emergency' :
+                                                   emergencyLevel === 2 ? 'Telemedicine' :
                                                    'Chat'}
                                     </button>
                                     <button
@@ -432,7 +432,7 @@ function AnalysisBotECG() {
                                     </p>
                                     <div className="mt-4">
                                         <div className="w-full bg-gray-200 rounded-full h-2.5">
-                                            <div 
+                                            <div
                                                 className="h-2.5 rounded-full transition-all duration-1000"
                                                 style={{
                                                     width: `${(countdown / 5) * 100}%`,

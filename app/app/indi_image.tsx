@@ -1,28 +1,27 @@
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import * as FileSystem from 'expo-file-system';
+import * as ImagePicker from 'expo-image-picker';
+import { LinearGradient } from 'expo-linear-gradient';
+import { printToFileAsync } from 'expo-print';
+import * as Sharing from 'expo-sharing';
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-  TextInput,
-  Alert,
-  ActivityIndicator,
-  Platform,
-  Dimensions,
-  StatusBar,
+    ActivityIndicator,
+    Alert,
+    Dimensions,
+    Image,
+    ScrollView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
 } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import * as FileSystem from 'expo-file-system';
-import * as Sharing from 'expo-sharing';
-import { printToFileAsync } from 'expo-print';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import { LinearGradient } from 'expo-linear-gradient';
-
-const { width, height } = Dimensions.get('window');
 
 import { config } from '../config/environment';
+
+const { width, height } = Dimensions.get('window');
 
 interface CloudinaryResponse {
   secure_url: string;
@@ -58,7 +57,7 @@ const uploadToCloudinary = async (imageUri: string): Promise<string> => {
 
 const formatAnalysisResults = (rawResult: string): string => {
   const lines = rawResult.split('\n').filter(line => line.trim() !== '');
-  
+
   const formattedLines = lines.map(line => {
     if (line.toLowerCase().includes('alzheimer')) {
       return `**${line}**`;
@@ -79,7 +78,7 @@ const analyzeImage = async (imageUrl: string, customPrompt: string): Promise<str
   try {
     const response = await fetch(imageUrl);
     const blob = await response.blob();
-    
+
     const base64Image = await new Promise<string>((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(blob);
@@ -91,7 +90,7 @@ const analyzeImage = async (imageUrl: string, customPrompt: string): Promise<str
     });
 
     const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
-    
+
     const result = await model.generateContent([
       customPrompt,
       {
@@ -191,7 +190,7 @@ const AlzheimerVisionAI: React.FC = () => {
               margin: 0;
               padding: 0;
             }
-            
+
             body {
               font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
               line-height: 1.6;
@@ -200,7 +199,7 @@ const AlzheimerVisionAI: React.FC = () => {
               padding: 20px;
               color: #333;
             }
-            
+
             .container {
               max-width: 800px;
               margin: 0 auto;
@@ -210,7 +209,7 @@ const AlzheimerVisionAI: React.FC = () => {
               overflow: hidden;
               position: relative;
             }
-            
+
             .header {
               background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
               color: white;
@@ -219,7 +218,7 @@ const AlzheimerVisionAI: React.FC = () => {
               position: relative;
               overflow: hidden;
             }
-            
+
             .header::before {
               content: '';
               position: absolute;
@@ -231,12 +230,12 @@ const AlzheimerVisionAI: React.FC = () => {
               animation: float 20s ease-in-out infinite;
               opacity: 0.3;
             }
-            
+
             @keyframes float {
               0%, 100% { transform: translateX(0px) translateY(0px); }
               50% { transform: translateX(-20px) translateY(-20px); }
             }
-            
+
             .logo {
               width: 60px;
               height: 60px;
@@ -250,7 +249,7 @@ const AlzheimerVisionAI: React.FC = () => {
               backdrop-filter: blur(10px);
               border: 2px solid rgba(255,255,255,0.3);
             }
-            
+
             .title {
               font-size: 32px;
               font-weight: 700;
@@ -259,7 +258,7 @@ const AlzheimerVisionAI: React.FC = () => {
               position: relative;
               z-index: 1;
             }
-            
+
             .subtitle {
               font-size: 18px;
               font-weight: 300;
@@ -267,11 +266,11 @@ const AlzheimerVisionAI: React.FC = () => {
               position: relative;
               z-index: 1;
             }
-            
+
             .content {
               padding: 40px 30px;
             }
-            
+
             .report-meta {
               background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%);
               padding: 25px;
@@ -280,19 +279,19 @@ const AlzheimerVisionAI: React.FC = () => {
               border-left: 5px solid #667eea;
               box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
             }
-            
+
             .meta-grid {
               display: grid;
               grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
               gap: 15px;
             }
-            
+
             .meta-item {
               display: flex;
               align-items: center;
               gap: 10px;
             }
-            
+
             .meta-icon {
               width: 20px;
               height: 20px;
@@ -305,7 +304,7 @@ const AlzheimerVisionAI: React.FC = () => {
               font-size: 12px;
               font-weight: bold;
             }
-            
+
             .section {
               margin-bottom: 35px;
               background: white;
@@ -314,7 +313,7 @@ const AlzheimerVisionAI: React.FC = () => {
               box-shadow: 0 5px 20px rgba(0,0,0,0.08);
               border: 1px solid #f0f0f0;
             }
-            
+
             .section-header {
               background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
               color: white;
@@ -325,7 +324,7 @@ const AlzheimerVisionAI: React.FC = () => {
               align-items: center;
               gap: 12px;
             }
-            
+
             .section-icon {
               width: 24px;
               height: 24px;
@@ -336,11 +335,11 @@ const AlzheimerVisionAI: React.FC = () => {
               justify-content: center;
               font-size: 14px;
             }
-            
+
             .section-content {
               padding: 25px;
             }
-            
+
             .analysis-text {
               font-size: 16px;
               line-height: 1.8;
@@ -351,7 +350,7 @@ const AlzheimerVisionAI: React.FC = () => {
               border-radius: 10px;
               border-left: 4px solid #667eea;
             }
-            
+
             .prompt-text {
               font-size: 15px;
               line-height: 1.7;
@@ -362,7 +361,7 @@ const AlzheimerVisionAI: React.FC = () => {
               border-left: 4px solid #28a745;
               font-style: italic;
             }
-            
+
             .highlight {
               background: linear-gradient(120deg, #667eea 0%, #764ba2 100%);
               -webkit-background-clip: text;
@@ -370,7 +369,7 @@ const AlzheimerVisionAI: React.FC = () => {
               background-clip: text;
               font-weight: 600;
             }
-            
+
             .footer {
               background: #f8f9fa;
               padding: 30px;
@@ -378,7 +377,7 @@ const AlzheimerVisionAI: React.FC = () => {
               border-top: 1px solid #e9ecef;
               color: #666;
             }
-            
+
             .footer-logo {
               width: 40px;
               height: 40px;
@@ -391,7 +390,7 @@ const AlzheimerVisionAI: React.FC = () => {
               color: white;
               font-weight: bold;
             }
-            
+
             .disclaimer {
               background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
               border: 1px solid #ffeaa7;
@@ -400,25 +399,25 @@ const AlzheimerVisionAI: React.FC = () => {
               margin-top: 20px;
               text-align: left;
             }
-            
+
             .disclaimer-icon {
               color: #856404;
               font-size: 18px;
               margin-right: 10px;
             }
-            
+
             strong {
               color: #667eea;
               font-weight: 600;
             }
-            
+
             .stats-grid {
               display: grid;
               grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
               gap: 20px;
               margin: 20px 0;
             }
-            
+
             .stat-card {
               background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
               color: white;
@@ -427,13 +426,13 @@ const AlzheimerVisionAI: React.FC = () => {
               text-align: center;
               box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
             }
-            
+
             .stat-number {
               font-size: 24px;
               font-weight: bold;
               margin-bottom: 5px;
             }
-            
+
             .stat-label {
               font-size: 12px;
               opacity: 0.9;
@@ -449,7 +448,7 @@ const AlzheimerVisionAI: React.FC = () => {
               <div class="title">CureConnect Medical Report</div>
               <div class="subtitle">AI-Powered CT Scan Analysis</div>
             </div>
-            
+
             <div class="content">
               <div class="report-meta">
                 <div class="meta-grid">
@@ -457,11 +456,11 @@ const AlzheimerVisionAI: React.FC = () => {
                     <div class="meta-icon">📅</div>
                     <div>
                       <strong>Date:</strong><br>
-                      ${new Date().toLocaleDateString('en-US', { 
-                        weekday: 'long', 
-                        year: 'numeric', 
-                        month: 'long', 
-                        day: 'numeric' 
+                      ${new Date().toLocaleDateString('en-US', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
                       })}
                     </div>
                   </div>
@@ -476,8 +475,8 @@ const AlzheimerVisionAI: React.FC = () => {
                     <div class="meta-icon">⏰</div>
                     <div>
                       <strong>Time:</strong><br>
-                      ${new Date().toLocaleTimeString('en-US', { 
-                        hour: '2-digit', 
+                      ${new Date().toLocaleTimeString('en-US', {
+                        hour: '2-digit',
                         minute: '2-digit',
                         hour12: true
                       })}
@@ -507,7 +506,7 @@ const AlzheimerVisionAI: React.FC = () => {
                   <div class="stat-label">Accuracy Rate</div>
                 </div>
               </div>
-              
+
               <div class="section">
                 <div class="section-header">
                   <div class="section-icon">🔬</div>
@@ -517,7 +516,7 @@ const AlzheimerVisionAI: React.FC = () => {
                   <div class="analysis-text">${analysis.replace(/\*\*(.*?)\*\*/g, '<span class="highlight">$1</span>')}</div>
                 </div>
               </div>
-              
+
               <div class="section">
                 <div class="section-header">
                   <div class="section-icon">💬</div>
@@ -527,7 +526,7 @@ const AlzheimerVisionAI: React.FC = () => {
                   <div class="prompt-text">${customPrompt}</div>
                 </div>
               </div>
-              
+
               <div class="disclaimer">
                 <div style="display: flex; align-items: flex-start;">
                   <span class="disclaimer-icon">⚠️</span>
@@ -538,7 +537,7 @@ const AlzheimerVisionAI: React.FC = () => {
                 </div>
               </div>
             </div>
-            
+
             <div class="footer">
               <div class="footer-logo">CC</div>
               <div>
@@ -559,7 +558,7 @@ const AlzheimerVisionAI: React.FC = () => {
 
       const filename = `CureConnect_Report_${new Date().toLocaleDateString().replace(/\//g, '-')}.pdf`;
       const newUri = `${FileSystem.documentDirectory}${filename}`;
-      
+
       await FileSystem.moveAsync({
         from: uri,
         to: newUri,
@@ -579,7 +578,7 @@ const AlzheimerVisionAI: React.FC = () => {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#667eea" />
-      
+
       {/* Gradient Header */}
       <LinearGradient
         colors={['#667eea', '#764ba2']}
@@ -626,7 +625,7 @@ const AlzheimerVisionAI: React.FC = () => {
             </View>
             <Text style={styles.cardTitle}>Upload Medical Image</Text>
           </View>
-          
+
           {!selectedImage ? (
             <TouchableOpacity style={styles.uploadArea} onPress={pickImage}>
               <LinearGradient
@@ -651,7 +650,7 @@ const AlzheimerVisionAI: React.FC = () => {
                   style={styles.imageOverlay}
                 />
               </View>
-              
+
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={[styles.actionButton, styles.analyzeButton]}
@@ -674,7 +673,7 @@ const AlzheimerVisionAI: React.FC = () => {
                     </Text>
                   </LinearGradient>
                 </TouchableOpacity>
-                
+
                 <TouchableOpacity
                   style={[styles.actionButton, styles.resetButton]}
                   onPress={resetAnalysis}
