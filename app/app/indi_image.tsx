@@ -22,11 +22,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 const { width, height } = Dimensions.get('window');
 
+import { config } from '../config/environment';
+
 interface CloudinaryResponse {
   secure_url: string;
 }
 
-const genAI = new GoogleGenerativeAI('AIzaSyASSY9fkUZY2Q9cYsCd-mTMK0sr98lPh30');
+const genAI = new GoogleGenerativeAI(config.GOOGLE_AI_API_KEY);
 
 const uploadToCloudinary = async (imageUri: string): Promise<string> => {
   try {

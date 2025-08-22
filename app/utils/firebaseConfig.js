@@ -1,13 +1,14 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { config } from '../config/environment';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCFdbSFYfjh9UIvrfFJZr60U7OAZIUNU8I",
-  authDomain: "goods-ab8b5.firebaseapp.com",
-  projectId: "goods-ab8b5",
-  storageBucket: "goods-ab8b5.firebasestorage.app",
-  messagingSenderId: "1084647770453",
-  appId: "1:1084647770453:web:53d5c957527728c6fd47dc",
+  apiKey: config.FIREBASE_API_KEY,
+  authDomain: config.FIREBASE_AUTH_DOMAIN,
+  projectId: config.FIREBASE_PROJECT_ID,
+  storageBucket: config.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: config.FIREBASE_MESSAGING_SENDER_ID,
+  appId: config.FIREBASE_APP_ID,
   measurementId: "G-5SXG6Y87Y1"
 };
 

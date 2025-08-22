@@ -10,7 +10,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import AnalysisResults from '../components/AnalysisResults';
 import { useNavigate } from 'react-router-dom';
 
-const genAI = new GoogleGenerativeAI("AIzaSyASSY9fkUZY2Q9cYsCd-mTMK0sr98lPh30");
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GOOGLE_AI_API_KEY);
 
 function SkinVideoAnalysis() {
     const dispatch = useDispatch();

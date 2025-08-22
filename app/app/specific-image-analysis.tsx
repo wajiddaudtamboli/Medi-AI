@@ -19,11 +19,12 @@ import {
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { config } from '../config/environment';
 
 const { width, height } = Dimensions.get('window');
 
 // Initialize Google AI
-const genAI = new GoogleGenerativeAI('AIzaSyASSY9fkUZY2Q9cYsCd-mTMK0sr98lPh30');
+const genAI = new GoogleGenerativeAI(config.GOOGLE_AI_API_KEY);
 
 interface CloudinaryResponse {
   secure_url: string;
