@@ -3,14 +3,14 @@ info:
   title: CureConnect AI Healthcare Platform API
   description: |
     **CureConnect AI** is a comprehensive healthcare platform that combines traditional medical approaches with cutting-edge AI technology.
-    
+
     ## Features
     - 🤖 **AI-Powered Medical Analysis** using Google Gemini 1.5-flash
     - 🚨 **Emergency Assessment System** with 5-level urgency classification
     - 🏥 **Multi-Modal Health Advisory** (Conventional, Ayurvedic, Homeopathic)
     - 🎥 **Real-time Video Consultations** via WebRTC
     - 📱 **Cross-Platform Support** (Web, Mobile)
-    
+
     ## Authentication
     Most endpoints require JWT authentication. Include the token in the Authorization header:
     ```

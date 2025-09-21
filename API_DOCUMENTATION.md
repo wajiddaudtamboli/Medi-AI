@@ -1,6 +1,7 @@
 # 🔌 CureConnect AI - Complete API Documentation
 
 ## 📋 **Table of Contents**
+
 1. [Backend REST APIs](#backend-rest-apis)
 2. [AI & Machine Learning APIs](#ai--machine-learning-apis)
 3. [Real-time Communication APIs](#real-time-communication-apis)
@@ -17,6 +18,7 @@
 ### 🔐 **Authentication Endpoints**
 
 #### **1. User Registration**
+
 ```http
 POST /api/v1/register
 Content-Type: application/json
@@ -30,6 +32,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -48,6 +51,7 @@ Content-Type: application/json
 ```
 
 #### **2. User Login**
+
 ```http
 POST /api/v1/login
 Content-Type: application/json
@@ -59,6 +63,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -73,12 +78,14 @@ Content-Type: application/json
 ```
 
 #### **3. Get User Profile**
+
 ```http
 GET /api/v1/me
 Authorization: Bearer jwt_token_here
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -94,12 +101,14 @@ Authorization: Bearer jwt_token_here
 ```
 
 #### **4. User Logout**
+
 ```http
 GET /api/v1/logout
 Authorization: Bearer jwt_token_here
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -110,11 +119,13 @@ Authorization: Bearer jwt_token_here
 ### 🏥 **Medical Services Endpoints**
 
 #### **5. Get All Doctors**
+
 ```http
 GET /api/v1/doctors
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -136,6 +147,7 @@ GET /api/v1/doctors
 ```
 
 #### **6. Add Medical History**
+
 ```http
 POST /api/v1/medical-history
 Authorization: Bearer jwt_token_here
@@ -149,6 +161,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -158,12 +171,14 @@ Content-Type: application/json
 ```
 
 #### **7. Get Medical History**
+
 ```http
 GET /api/v1/medical-history/{userId}
 Authorization: Bearer jwt_token_here
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -184,6 +199,7 @@ Authorization: Bearer jwt_token_here
 ### 🚨 **Emergency Services Endpoints**
 
 #### **8. Create Emergency Notification**
+
 ```http
 POST /api/v1/emergency/notify
 Authorization: Bearer jwt_token_here
@@ -197,6 +213,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -206,6 +223,7 @@ Content-Type: application/json
 ```
 
 #### **9. Get Emergency Notifications (Doctors Only)**
+
 ```http
 GET /api/v1/emergency/notifications
 Authorization: Bearer jwt_token_here
@@ -213,6 +231,7 @@ X-User-Role: doctor
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -236,6 +255,7 @@ X-User-Role: doctor
 ## 🤖 **AI & Machine Learning APIs**
 
 ### **10. AI Chat Consultation**
+
 ```http
 POST /api/v1/chat
 Content-Type: application/json
@@ -246,6 +266,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -256,21 +277,23 @@ Content-Type: application/json
 ### **Google Gemini AI Integration**
 
 #### **Image Analysis API**
+
 ```javascript
 // Internal service call
 const geminiService = require('./utils/geminiService');
 
 const result = await geminiService.analyzeImage(
   imageBase64,
-  "Analyze this medical image for any abnormalities",
-  "ecg" // analysisType: ecg, xray, skin, cancer, etc.
+  'Analyze this medical image for any abnormalities',
+  'ecg' // analysisType: ecg, xray, skin, cancer, etc.
 );
 ```
 
 #### **Text Analysis API**
+
 ```javascript
 const result = await geminiService.analyzeText(
-  "Provide health advice for patient with diabetes"
+  'Provide health advice for patient with diabetes'
 );
 ```
 
@@ -281,47 +304,50 @@ const result = await geminiService.analyzeText(
 ### **Socket.IO Events**
 
 #### **Video Call Events**
+
 ```javascript
 // Client to Server
-socket.emit("join-room", roomId);
-socket.emit("offer", { roomId, offer });
-socket.emit("answer", { roomId, answer });
-socket.emit("ice-candidate", { roomId, candidate });
+socket.emit('join-room', roomId);
+socket.emit('offer', { roomId, offer });
+socket.emit('answer', { roomId, answer });
+socket.emit('ice-candidate', { roomId, candidate });
 
 // Server to Client
-socket.on("ready");
-socket.on("offer", offer);
-socket.on("answer", answer);
-socket.on("ice-candidate", candidate);
-socket.on("room-full");
+socket.on('ready');
+socket.on('offer', offer);
+socket.on('answer', answer);
+socket.on('ice-candidate', candidate);
+socket.on('room-full');
 ```
 
 #### **Emergency Events**
+
 ```javascript
 // Client to Server
-socket.emit("emergencyRequest", {
-  name: "John Doe",
-  urgency: 5
+socket.emit('emergencyRequest', {
+  name: 'John Doe',
+  urgency: 5,
 });
 
-socket.emit("doctorConnect", doctorId);
+socket.emit('doctorConnect', doctorId);
 
 // Server to Client
-socket.on("emergencyNotification", {
-  patientName: "John Doe",
-  roomId: "emergency"
+socket.on('emergencyNotification', {
+  patientName: 'John Doe',
+  roomId: 'emergency',
 });
 ```
 
 #### **Chat Events**
+
 ```javascript
 // Client to Server (Chat namespace: /chat)
-socket.emit("join-room", roomId);
-socket.emit("user-message", { roomId, text });
+socket.emit('join-room', roomId);
+socket.emit('user-message', { roomId, text });
 
 // Server to Client
-socket.on("message", { text, sender });
-socket.on("room-full");
+socket.on('message', { text, sender });
+socket.on('room-full');
 ```
 
 ---
@@ -331,17 +357,19 @@ socket.on("room-full");
 ### **11. Twilio SMS API**
 
 #### **Send SMS**
+
 ```javascript
 // Internal service usage
 const sendSMS = require('./utils/sendSMS');
 
 await sendSMS({
-  phone: "+1234567890",
-  message: "Welcome to CureConnect!"
+  phone: '+1234567890',
+  message: 'Welcome to CureConnect!',
 });
 ```
 
 #### **Configuration**
+
 ```javascript
 const twilio = require('twilio');
 const client = twilio(
@@ -353,17 +381,19 @@ const client = twilio(
 ### **12. Email Service API**
 
 #### **Send Email**
+
 ```javascript
 const sendEmail = require('./utils/sendEmail');
 
 await sendEmail({
-  email: "user@example.com",
-  subject: "Emergency Medical Consultation",
-  message: "Emergency consultation required..."
+  email: 'user@example.com',
+  subject: 'Emergency Medical Consultation',
+  message: 'Emergency consultation required...',
 });
 ```
 
 #### **SMTP Configuration**
+
 ```javascript
 const nodemailer = require('nodemailer');
 
@@ -372,24 +402,25 @@ const transporter = nodemailer.createTransporter({
   port: process.env.SMTP_PORT,
   auth: {
     user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS
-  }
+    pass: process.env.SMTP_PASS,
+  },
 });
 ```
 
 ### **13. Cloudinary API**
 
 #### **Image Upload (Mobile)**
+
 ```javascript
-const uploadToCloudinary = async (imageUri) => {
+const uploadToCloudinary = async imageUri => {
   const formData = new FormData();
   formData.append('file', {
     uri: imageUri,
     type: 'image/jpeg',
-    name: 'medical_image.jpg'
+    name: 'medical_image.jpg',
   });
   formData.append('upload_preset', 'your_upload_preset');
-  
+
   const response = await fetch(
     'https://api.cloudinary.com/v1_1/your_cloud_name/image/upload',
     {
@@ -397,10 +428,10 @@ const uploadToCloudinary = async (imageUri) => {
       body: formData,
       headers: {
         'Content-Type': 'multipart/form-data',
-      }
+      },
     }
   );
-  
+
   return response.json();
 };
 ```
@@ -408,9 +439,13 @@ const uploadToCloudinary = async (imageUri) => {
 ### **14. Firebase APIs**
 
 #### **Authentication**
+
 ```javascript
 import { auth } from './firebaseConfig';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from 'firebase/auth';
 
 // Login
 await signInWithEmailAndPassword(auth, email, password);
@@ -420,6 +455,7 @@ await createUserWithEmailAndPassword(auth, email, password);
 ```
 
 #### **Firestore Database**
+
 ```javascript
 import { db } from './firebaseConfig';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
@@ -428,7 +464,7 @@ import { collection, addDoc, getDocs } from 'firebase/firestore';
 await addDoc(collection(db, 'medical_records'), {
   userId: 'user_id',
   analysis: 'Medical analysis...',
-  timestamp: new Date()
+  timestamp: new Date(),
 });
 
 // Get documents
@@ -442,6 +478,7 @@ const querySnapshot = await getDocs(collection(db, 'medical_records'));
 ### **15. Expo APIs**
 
 #### **Image Picker**
+
 ```javascript
 import * as ImagePicker from 'expo-image-picker';
 
@@ -454,6 +491,7 @@ const result = await ImagePicker.launchImageLibraryAsync({
 ```
 
 #### **Camera**
+
 ```javascript
 const result = await ImagePicker.launchCameraAsync({
   allowsEditing: true,
@@ -463,6 +501,7 @@ const result = await ImagePicker.launchCameraAsync({
 ```
 
 #### **File System**
+
 ```javascript
 import * as FileSystem from 'expo-file-system';
 
@@ -473,6 +512,7 @@ const fileData = await FileSystem.readAsStringAsync(uri, {
 ```
 
 #### **Print & Share**
+
 ```javascript
 import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
@@ -492,6 +532,7 @@ await Sharing.shareAsync(uri);
 ## 🔑 **Environment Variables**
 
 ### **Backend Environment Variables**
+
 ```bash
 # Database
 DATABASE_URL=postgresql://username:password@host:5432/database
@@ -524,6 +565,7 @@ FRONTEND_URL=https://your-frontend-domain.com
 ```
 
 ### **Frontend Environment Variables**
+
 ```bash
 # API Configuration
 VITE_API_URL=/api/v1
@@ -537,6 +579,7 @@ VITE_EMERGENCY_VIDEO_URL=https://video-call-service.com
 ```
 
 ### **Mobile App Environment Variables**
+
 ```bash
 # Google AI
 EXPO_PUBLIC_GOOGLE_AI_API_KEY=your-google-ai-api-key
@@ -559,19 +602,23 @@ EXPO_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your-upload-preset
 ## 📊 **API Rate Limits & Quotas**
 
 ### **Google Gemini AI**
+
 - **Rate Limit**: 60 requests per minute
 - **Daily Quota**: Varies by plan
 - **Image Analysis**: Max 20MB per image
 
 ### **Twilio SMS**
+
 - **Rate Limit**: 1 message per second per phone number
 - **Cost**: Pay per message
 
 ### **Firebase**
+
 - **Firestore**: 50,000 reads/writes per day (free tier)
 - **Authentication**: Unlimited (free tier)
 
 ### **Cloudinary**
+
 - **Free Tier**: 25 credits/month
 - **Upload Limit**: 10MB per image
 - **Storage**: 25GB (free tier)
@@ -581,6 +628,7 @@ EXPO_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your-upload-preset
 ## 🔍 **Error Handling**
 
 ### **Standard Error Response Format**
+
 ```json
 {
   "success": false,
@@ -593,6 +641,7 @@ EXPO_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your-upload-preset
 ```
 
 ### **Common HTTP Status Codes**
+
 - `200` - Success
 - `201` - Created
 - `400` - Bad Request
@@ -606,6 +655,7 @@ EXPO_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your-upload-preset
 ## 🔒 **Security & Authentication**
 
 ### **JWT Token Format**
+
 ```javascript
 // Header
 {
@@ -623,15 +673,18 @@ EXPO_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your-upload-preset
 ```
 
 ### **Protected Routes**
+
 ```javascript
 // Middleware usage
 router.route('/me').get(isAuthenticatedUser, getUserDetails);
 router.route('/medical-history').post(isAuthenticatedUser, addMedicalHistory);
-router.route('/emergency/notifications').get(
-  isAuthenticatedUser, 
-  authorizeRoles("doctor"), 
-  getEmergencyNotifications
-);
+router
+  .route('/emergency/notifications')
+  .get(
+    isAuthenticatedUser,
+    authorizeRoles('doctor'),
+    getEmergencyNotifications
+  );
 ```
 
 ---
@@ -639,6 +692,7 @@ router.route('/emergency/notifications').get(
 ## 📚 **API Testing Examples**
 
 ### **Using cURL**
+
 ```bash
 # Login
 curl -X POST http://localhost:5002/api/v1/login \
@@ -656,6 +710,7 @@ curl -X POST http://localhost:5002/api/v1/chat \
 ```
 
 ### **Using JavaScript Fetch**
+
 ```javascript
 // Login
 const loginResponse = await fetch('/api/v1/login', {
@@ -665,15 +720,15 @@ const loginResponse = await fetch('/api/v1/login', {
   },
   body: JSON.stringify({
     contact: 'user@example.com',
-    password: 'password123'
-  })
+    password: 'password123',
+  }),
 });
 
 // Get profile with token
 const profileResponse = await fetch('/api/v1/me', {
   headers: {
-    'Authorization': `Bearer ${token}`
-  }
+    Authorization: `Bearer ${token}`,
+  },
 });
 ```
 

@@ -1,6 +1,6 @@
-# CureConnect AI - Comprehensive Healthcare Platform 🏥🤖
+# HealthBridge AI - Comprehensive Healthcare Platform 🏥🤖
 
-> **Live Demo**: [CureConnect AI on Vercel](https://cure-connect-ai.vercel.app/) > **Repository**: [GitHub - CureConnectAI](https://github.com/wajiddaudtamboli/CureConnectAI)
+> **Live Demo**: [HealthBridge AI on Vercel](https://healthbridge-ai.vercel.app/) > **Repository**: [GitHub - HealthBridge-AI](https://github.com/wajiddaudtamboli/HealthBridge-AI)
 
 ## � **SECURITY NOTICE**
 
@@ -18,7 +18,7 @@
 
 ## 🎯 Project Overview
 
-CureConnect AI revolutionizes healthcare by combining traditional medical approaches with cutting-edge AI technology. Our platform provides comprehensive medical assistance through multiple modalities:
+HealthBridge AI revolutionizes healthcare by combining traditional medical approaches with cutting-edge AI technology. Our platform provides comprehensive medical assistance through multiple modalities:
 
 ### 🚨 **Emergency System**
 
@@ -92,7 +92,7 @@ CureConnect AI revolutionizes healthcare by combining traditional medical approa
 1. **Repository Setup** ✅
 
    ```bash
-   git clone https://github.com/wajiddaudtamboli/CureConnectAI.git
+   git clone https://github.com/wajiddaudtamboli/HealthBridge-AI.git
    ```
 
 2. **Vercel Configuration** ✅
@@ -112,7 +112,7 @@ CureConnect AI revolutionizes healthcare by combining traditional medical approa
    ```
 
 4. **One-Click Deploy**:
-   [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/wajiddaudtamboli/CureConnectAI)
+   [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/wajiddaudtamboli/HealthBridge-AI)
 
 **📖 Detailed deployment guide**: See [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md)
 
@@ -190,21 +190,20 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 🙏 Acknowledgments
-
-- **Google AI** for Gemini API integration
-- **Neon** for PostgreSQL database hosting
-- **Vercel** for seamless deployment platform
-- **React & Node.js** communities for excellent frameworks
+## � Let's Connect  
+I'm excited to connect with developers and tech enthusiasts alike! Feel free to reach out to me on:  
+**Wajid Daud Tamboli**  
+- **LinkedIn** - [linkedin.com/in/wajid-daud-tamboli-3217b031a](https://linkedin.com/in/wajid-daud-tamboli-3217b031a)  
+- **Gmail** - wajidddaudtamboli123@gmail.com
 
 ---
 
 <div align="center">
 
-**🏥 CureConnect AI - Revolutionizing Healthcare Through AI 🤖**
+**🏥 HealthBridge AI - Revolutionizing Healthcare Through AI 🤖**
 
-[![Vercel Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/wajiddaudtamboli/CureConnectAI)
-[![GitHub Stars](https://img.shields.io/github/stars/wajiddaudtamboli/CureConnectAI)](https://github.com/wajiddaudtamboli/CureConnectAI)
+[![Vercel Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/wajiddaudtamboli/HealthBridge-AI)
+[![GitHub Stars](https://img.shields.io/github/stars/wajiddaudtamboli/HealthBridge-AI)](https://github.com/wajiddaudtamboli/HealthBridge-AI)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 </div>

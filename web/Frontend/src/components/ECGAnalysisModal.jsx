@@ -419,4 +419,4 @@ function ECGAnalysisModal({ isOpen, onClose }) {
     );
 }
 
-export default ECGAnalysisModal; 
+export default ECGAnalysisModal;
