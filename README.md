@@ -1,6 +1,6 @@
 # HealthBridge AI - Comprehensive Healthcare Platform 🏥🤖
 
-> **Live Demo**: [HealthBridge AI on Vercel](https://healthbridge-ai.vercel.app/) > **Repository**: [GitHub - HealthBridge-AI](https://github.com/wajiddaudtamboli/HealthBridge-AI)
+> **Repository**: [GitHub - HealthBridge-AI](https://github.com/wajiddaudtamboli/HealthBridge-AI)
 
 ## � **SECURITY NOTICE**
 
