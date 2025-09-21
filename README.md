@@ -1,21 +1,7 @@
 # HealthBridge AI - Comprehensive Healthcare Platform 🏥🤖
 
 > **Repository**: [GitHub - HealthBridge-AI](https://github.com/wajiddaudtamboli/HealthBridge-AI)
-
-## � **SECURITY NOTICE**
-
-**⚠️ IMPORTANT**: This repository does NOT contain any API keys or sensitive data. All environment variables are in `.env.example` templates. You must create your own `.env` files with your actual credentials before deployment.
-
-## �🚀 Quick Links
-
-- **🌐 Web App**: React + Vite frontend with AI integration
-- **📱 Mobile App**: React Native + Expo cross-platform
-- **⚡ Backend**: Node.js + Express with Google Gemini AI
-- **📊 Database**: Neon PostgreSQL with Prisma ORM
-- **🚀 Deployment**: Ready for Vercel deployment
-
 ---
-
 ## 🎯 Project Overview
 
 HealthBridge AI revolutionizes healthcare by combining traditional medical approaches with cutting-edge AI technology. Our platform provides comprehensive medical assistance through multiple modalities:
@@ -181,6 +167,19 @@ GET  /api/v1/doctors              # Available doctors
 POST /api/v1/medical-history/add  # Add medical record
 GET  /api/v1/medical-history      # Patient medical history
 ```
+
+## � **SECURITY NOTICE**
+
+**⚠️ IMPORTANT**: This repository does NOT contain any API keys or sensitive data. All environment variables are in `.env.example` templates. You must create your own `.env` files with your actual credentials before deployment.
+
+## �🚀 Quick Links
+
+- **🌐 Web App**: React + Vite frontend with AI integration
+- **📱 Mobile App**: React Native + Expo cross-platform
+- **⚡ Backend**: Node.js + Express with Google Gemini AI
+- **📊 Database**: Neon PostgreSQL with Prisma ORM
+- **🚀 Deployment**: Ready for Vercel deployment
+
 
 ---
 
