@@ -1,49 +1,29 @@
 {
   "version": 2,
   "name": "medi-ai",
-  "builds": [
+  "buildCommand": "cd web/Frontend && npm install && npm run build",
+  "outputDirectory": "web/Frontend/dist",
+  "rewrites": [
     {
-      "src": "web/Backend/api/index.js",
-      "use": "@vercel/node"
+      "source": "/api/v1/:path*",
+      "destination": "/web/Backend/api/index.js"
     },
     {
-      "src": "web/Frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
+      "source": "/socket.io/:path*",
+      "destination": "/web/Backend/api/index.js"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/web/Frontend/dist/index.html"
     }
   ],
-  "routes": [
-    {
-      "src": "/api/v1/(.*)",
-      "dest": "web/Backend/api/index.js"
-    },
-    {
-      "src": "/socket.io/(.*)",
-      "dest": "web/Backend/api/index.js"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "web/Frontend/dist/$1"
-    }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  },
   "functions": {
     "web/Backend/api/index.js": {
       "memory": 1024,
       "maxDuration": 60
     }
   },
-  "rewrites": [
-    {
-      "source": "/api/v1/:path*",
-      "destination": "/web/Backend/api/index.js"
-    }
-  ]
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
