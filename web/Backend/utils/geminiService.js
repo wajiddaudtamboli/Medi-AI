@@ -1,9 +1,8 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const { GoogleGenAI } = require("@google/genai");
 
 class GeminiService {
   constructor() {
-    this.genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY);
-    this.model = this.genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    this.ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_AI_API_KEY });
   }
 
   async analyzeImage(imageBase64, prompt, analysisType = 'general') {
@@ -17,14 +16,16 @@ class GeminiService {
         },
       };
 
-      const result = await this.model.generateContent([imagePrompt, imagePart]);
-      const response = await result.response;
+      const result = await this.ai.models.generateContent({
+        model: "gemini-1.5-flash",
+        contents: [{ role: "user", parts: [{ text: imagePrompt }, imagePart] }]
+      });
 
       return {
         success: true,
-        analysis: response.text(),
-        confidence: this.calculateConfidence(response.text()),
-        recommendations: this.extractRecommendations(response.text()),
+        analysis: result.text,
+        confidence: this.calculateConfidence(result.text),
+        recommendations: this.extractRecommendations(result.text),
       };
     } catch (error) {
       console.error('Gemini AI Analysis Error:', error);
@@ -39,12 +40,15 @@ class GeminiService {
   async analyzeText(prompt, context = '') {
     try {
       const fullPrompt = context ? `Context: ${context}\n\nPrompt: ${prompt}` : prompt;
-      const result = await this.model.generateContent(fullPrompt);
-      const response = await result.response;
+      
+      const result = await this.ai.models.generateContent({
+        model: "gemini-1.5-flash",
+        contents: fullPrompt
+      });
 
       return {
         success: true,
-        response: response.text(),
+        response: result.text,
       };
     } catch (error) {
       console.error('Gemini AI Text Analysis Error:', error);
