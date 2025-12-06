@@ -1,9 +1,40 @@
 @import "tailwindcss";
+@import "./styles/responsive.css";
 
 *{
     font-family: Georgia, 'Times New Roman', Times, serif;
+    box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+    overflow-x: hidden;
 }
 
 body{
     width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Ensure full width for all main containers */
+#root {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Full width utility class */
+.w-full-screen {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+}
+
+/* Prevent horizontal scrolling */
+body, html, #root {
+    max-width: 100%;
+    overflow-x: hidden;
 }

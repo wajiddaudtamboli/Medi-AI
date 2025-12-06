@@ -213,7 +213,7 @@ try {
     }
   });
 
-  // Test connection with a simple timeout
+  // Test connection with a simple timeout - wrapped to prevent crashes
   const testConnection = async () => {
     try {
       await Promise.race([
@@ -226,16 +226,18 @@ try {
       prisma = realPrisma;
     } catch (error) {
       console.error('❌ Failed to connect to database:', error.message);
-      console.log('⚠️ Falling back to mock client for demo');
+      console.log('⚠️  Falling back to mock client for demo');
       prisma = createMockPrismaClient();
     }
   };
 
-  // Test connection asynchronously
-  testConnection();
-
-  // Initialize with mock for immediate use
+  // Initialize with mock for immediate use to prevent blocking
   prisma = createMockPrismaClient();
+  
+  // Test connection asynchronously without blocking server startup
+  testConnection().catch((err) => {
+    console.error('⚠️  Database connection test failed:', err.message);
+  });
 
 } catch (error) {
   console.error('❌ Prisma client initialization failed:', error);
@@ -243,11 +245,11 @@ try {
   prisma = createMockPrismaClient();
 }
 
-// Graceful shutdown
-process.on('beforeExit', async () => {
-  if (prisma.$disconnect) {
-    await prisma.$disconnect();
-  }
-});
+// Graceful shutdown - commented out to prevent premature exit
+// process.on('beforeExit', async () => {
+//   if (prisma.$disconnect) {
+//     await prisma.$disconnect();
+//   }
+// });
 
 module.exports = prisma;

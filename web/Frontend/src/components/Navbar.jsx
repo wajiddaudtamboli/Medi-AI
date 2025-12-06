@@ -6,16 +6,23 @@ import HealthAdvisory from "./HealthAdvisory.jsx";
 // Constants
 const NAV_ITEMS = [
     { path: "/", label: "Home" },
-    { path: "/telemedicine", label: "Emergency Video Call" },
-    { path: "/chat", label: "Chat Consult" },
-    { path: "/analysis", label: "Analysis" },
-    { path: "http://localhost:5174/", label: "Emergency" },
+    { path: "/treatment-suggestions", label: "Treatment Suggestions" },
+    { path: "/telemedicine", label: "Video Consultation" },
+    { path: "/chat", label: "AI Health Chat" },
+    { path: "/analysis", label: "Medical Analysis" },
+    { path: "https://video-call-final-git-main-orthodox-64s-projects.vercel.app/?roomID=emergency", label: "Emergency Services", external: true },
 ];
 
 export default function Navbar() {
     const dispatch = useDispatch();
     const { isAuthenticated } = useSelector((state) => state.user);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+    const handleNavClick = (item) => {
+        if (item.external) {
+            window.open(item.path, '_blank', 'noopener,noreferrer');
+        }
+    };
 
     const toggleMobileMenu = () => {
         setMobileMenuOpen(!mobileMenuOpen);
@@ -33,7 +40,7 @@ export default function Navbar() {
                     <div className="h-10 w-10">
                         <img
                             src="/src/assets/logo.png"
-                            alt="Logo"
+                            alt="MediAI Logo"
                             className="w-auto object-contain ml-4 md:ml-8 cursor-pointer transition-transform duration-300 hover:scale-105"
                         />
                     </div>
@@ -69,13 +76,23 @@ export default function Navbar() {
                 {/* Desktop Navigation */}
                 <ul className="hidden md:flex items-center space-x-4 lg:space-x-9">
                     {NAV_ITEMS.map((item) => (
-                        <a
-                            key={item.path}
-                            href={item.path}
-                            className="text-gray-800 hover:text-blue-800 transition-colors duration-200"
-                        >
-                            <li className="text-lg font-semibold">{item.label}</li>
-                        </a>
+                        item.external ? (
+                            <button
+                                key={item.path}
+                                onClick={() => handleNavClick(item)}
+                                className="text-gray-800 hover:text-blue-800 transition-colors duration-200"
+                            >
+                                <li className="text-lg font-semibold">{item.label}</li>
+                            </button>
+                        ) : (
+                            <a
+                                key={item.path}
+                                href={item.path}
+                                className="text-gray-800 hover:text-blue-800 transition-colors duration-200"
+                            >
+                                <li className="text-lg font-semibold">{item.label}</li>
+                            </a>
+                        )
                     ))}
                 </ul>
 
@@ -116,13 +133,23 @@ export default function Navbar() {
                 <div className="block md:hidden bg-white shadow-lg animate-fadeIn">
                     <ul className="flex flex-col p-4">
                         {NAV_ITEMS.map((item) => (
-                            <a
-                                key={item.path}
-                                href={item.path}
-                                className="py-3 text-gray-800 hover:text-blue-800 transition-colors duration-200"
-                            >
-                                <li className="text-base font-semibold">{item.label}</li>
-                            </a>
+                            item.external ? (
+                                <button
+                                    key={item.path}
+                                    onClick={() => handleNavClick(item)}
+                                    className="py-3 text-left text-gray-800 hover:text-blue-800 transition-colors duration-200"
+                                >
+                                    <li className="text-base font-semibold">{item.label}</li>
+                                </button>
+                            ) : (
+                                <a
+                                    key={item.path}
+                                    href={item.path}
+                                    className="py-3 text-gray-800 hover:text-blue-800 transition-colors duration-200"
+                                >
+                                    <li className="text-base font-semibold">{item.label}</li>
+                                </a>
+                            )
                         ))}
                     </ul>
                     <div className="p-4 space-y-3">

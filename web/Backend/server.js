@@ -6,6 +6,16 @@ const http = require('http');
 const { Server } = require('socket.io');
 require('dotenv').config();
 
+// Validate Gemini API Key on startup
+if (!process.env.GOOGLE_AI_API_KEY) {
+    console.error('❌ FATAL ERROR: GOOGLE_AI_API_KEY is missing in .env file');
+    console.error('⚠️  Please add your Gemini API key to continue');
+    console.error('🔗 Get API key from: https://makersuite.google.com/app/apikey');
+    process.exit(1);
+}
+
+console.log('✅ Gemini API Key validated');
+
 // Import database connection
 const prisma = require('./config/database');
 
@@ -154,22 +164,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Handle preflight requests explicitly
 app.options('*', cors());
 
-// Test database connection
-prisma.$connect()
-  .then(() => {
-    console.log('✅ Connected to Neon PostgreSQL database successfully');
-  })
-  .catch((error) => {
-    console.error('❌ Failed to connect to database:', error);
-  });
+// Database connection is handled in config/database.js
+// No need to call $connect here as it's async and handled separately
 
 // Routes
 const user = require('./routes/userRoutePrisma');
 const analysis = require('./routes/analysisRoute');
+const treatment = require('./routes/treatmentRoute');
 
 console.log('Loading routes...');
 app.use("/api/v1", user);
 app.use("/api/v1/analysis", analysis);
+app.use("/api/v1/treatment", treatment);
 console.log('Routes loaded successfully');
 
 // Chatbot endpoint using Gemini AI
@@ -184,28 +190,23 @@ app.post('/api/v1/chat', async (req, res) => {
             });
         }
 
-        // Import Gemini service
-        const geminiService = require('./utils/geminiService');
+        // Use centralized Gemini service
+        const geminiService = require('./services/gemini.service');
 
-        // Create a health-focused prompt
-        const healthPrompt = `You are a helpful medical AI assistant for CureConnect healthcare platform.
-        Please provide helpful, accurate, and safe medical information. Always remind users to consult with healthcare professionals for serious concerns.
+        // Generate medical advice using centralized service
+        const result = await geminiService.generateMedicalAdvice(message);
 
-        User message: ${message}
-
-        Please respond in a friendly, professional manner. If the question is about medical symptoms or health concerns, provide general information but emphasize the importance of professional medical consultation.`;
-
-        const response = await geminiService.analyzeText(healthPrompt);
-
-        if (response.success) {
+        if (result.success) {
             res.json({
                 success: true,
-                message: response.response
+                message: result.response,
+                timestamp: result.timestamp
             });
         } else {
             res.status(500).json({
                 success: false,
-                message: 'Sorry, I encountered an error. Please try again.'
+                message: 'Sorry, I encountered an error. Please try again.',
+                error: result.error
             });
         }
     } catch (error) {
@@ -242,4 +243,33 @@ app.set('prisma', prisma);
 
 // Start server
 const PORT = process.env.PORT || 5002;
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const HOST = '0.0.0.0';
+
+// Global error handlers
+process.on('uncaughtException', (error) => {
+    console.error('❌ Uncaught Exception:', error);
+    console.error(error.stack);
+});
+
+process.on('unhandledRejection', (error) => {
+    console.error('❌ Unhandled Rejection:', error);
+    console.error(error.stack);
+});
+
+server.on('error', (error) => {
+    console.error('❌ Server error:', error);
+    // Don't exit - keep server running
+    // process.exit(1);
+});
+
+// Only start server if not in serverless environment
+if (require.main === module) {
+    server.listen(PORT, HOST, () => {
+        console.log(`✅ Server running on http://${HOST}:${PORT}`);
+        console.log(`📡 Server is ready to accept connections`);
+        console.log(`🔍 Test with: curl http://localhost:${PORT}/api/v1/test`);
+    });
+}
+
+// Export for Vercel serverless
+module.exports = app;

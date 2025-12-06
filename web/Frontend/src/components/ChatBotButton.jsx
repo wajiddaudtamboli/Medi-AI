@@ -414,7 +414,7 @@ const ChatBotButton = () => {
             </form>
             <div className="mt-3 text-xs text-center text-gray-400">
               <span>
-                Powered by CureConnect •{" "}
+                Powered by MediAI •{" "}
                 {
                   languageOptions.find((lang) => lang.code === selectedLanguage)
                     ?.name

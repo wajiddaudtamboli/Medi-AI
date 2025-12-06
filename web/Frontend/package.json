@@ -1,11 +1,13 @@
 {
-  "name": "xd",
+  "name": "mediai-frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "MediAI - Intelligent Healthcare Assistant Frontend",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "vercel-build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },

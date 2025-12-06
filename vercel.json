@@ -1,31 +1,48 @@
 {
   "version": 2,
+  "name": "healthbridge-ai",
   "builds": [
+    {
+      "src": "web/Backend/server.js",
+      "use": "@vercel/node",
+      "config": {
+        "maxLambdaSize": "50mb"
+      }
+    },
     {
       "src": "web/Frontend/package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "dist" }
-    },
-    {
-      "src": "web/Backend/server.js",
-      "use": "@vercel/node"
+      "config": {
+        "distDir": "dist"
+      }
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/web/Backend/server.js"
+      "src": "/api/v1/(.*)",
+      "dest": "web/Backend/server.js",
+      "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+    },
+    {
+      "src": "/socket.io/(.*)",
+      "dest": "web/Backend/server.js"
+    },
+    {
+      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
-      "dest": "/web/Frontend/dist/$1"
+      "dest": "web/Frontend/dist/index.html"
     }
   ],
   "env": {
-    "DATABASE_URL": "@database_url",
-    "JWT_SECRET": "@jwt_secret",
-    "GOOGLE_AI_API_KEY": "@google_ai_api_key",
-    "TWILIO_ACCOUNT_SID": "@twilio_account_sid",
-    "TWILIO_AUTH_TOKEN": "@twilio_auth_token"
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "web/Backend/server.js": {
+      "memory": 1024,
+      "maxDuration": 60,
+      "includeFiles": "web/Backend/**"
+    }
   }
 }
