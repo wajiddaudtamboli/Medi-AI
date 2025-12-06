@@ -1,13 +1,10 @@
 {
   "version": 2,
-  "name": "healthbridge-ai",
+  "name": "medi-ai",
   "builds": [
     {
-      "src": "web/Backend/server.js",
-      "use": "@vercel/node",
-      "config": {
-        "maxLambdaSize": "50mb"
-      }
+      "src": "web/Backend/api/index.js",
+      "use": "@vercel/node"
     },
     {
       "src": "web/Frontend/package.json",
@@ -20,29 +17,33 @@
   "routes": [
     {
       "src": "/api/v1/(.*)",
-      "dest": "web/Backend/server.js",
-      "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+      "dest": "web/Backend/api/index.js"
     },
     {
       "src": "/socket.io/(.*)",
-      "dest": "web/Backend/server.js"
+      "dest": "web/Backend/api/index.js"
     },
     {
       "handle": "filesystem"
     },
     {
       "src": "/(.*)",
-      "dest": "web/Frontend/dist/index.html"
+      "dest": "web/Frontend/dist/$1"
     }
   ],
   "env": {
     "NODE_ENV": "production"
   },
   "functions": {
-    "web/Backend/server.js": {
+    "web/Backend/api/index.js": {
       "memory": 1024,
-      "maxDuration": 60,
-      "includeFiles": "web/Backend/**"
+      "maxDuration": 60
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/api/v1/:path*",
+      "destination": "/web/Backend/api/index.js"
+    }
+  ]
 }
