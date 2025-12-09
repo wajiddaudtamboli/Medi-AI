@@ -1,9 +1,9 @@
 {
   "version": 2,
   "name": "mediai",
-  "buildCommand": "cd web/Frontend && npm install && npm run build",
+  "buildCommand": "cd web/Frontend && npm install --legacy-peer-deps && npm run build",
   "outputDirectory": "web/Frontend/dist",
-  "installCommand": "cd web/Backend && npm install",
+  "installCommand": "cd web/Backend && npm install --legacy-peer-deps",
   "rewrites": [
     {
       "source": "/api/v1/:path*",

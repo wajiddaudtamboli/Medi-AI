@@ -1,6 +1,6 @@
 import { thunk } from 'redux-thunk'
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension'
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
+import { composeWithDevTools } from '@redux-devtools/extension'
 
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';  // redux-persist for storing data in state
