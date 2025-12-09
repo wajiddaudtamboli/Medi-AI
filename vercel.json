@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "medi-ai",
+  "name": "mediai",
   "buildCommand": "cd web/Frontend && npm install && npm run build",
   "outputDirectory": "web/Frontend/dist",
   "rewrites": [
