@@ -3,22 +3,23 @@
   "name": "mediai",
   "buildCommand": "cd web/Frontend && npm install && npm run build",
   "outputDirectory": "web/Frontend/dist",
+  "installCommand": "cd web/Backend && npm install",
   "rewrites": [
     {
       "source": "/api/v1/:path*",
-      "destination": "/web/Backend/api/index.js"
+      "destination": "/api/index.js"
     },
     {
       "source": "/socket.io/:path*",
-      "destination": "/web/Backend/api/index.js"
+      "destination": "/api/index.js"
     },
     {
       "source": "/(.*)",
-      "destination": "/web/Frontend/dist/index.html"
+      "destination": "/index.html"
     }
   ],
   "functions": {
-    "web/Backend/api/index.js": {
+    "api/index.js": {
       "memory": 1024,
       "maxDuration": 60
     }
