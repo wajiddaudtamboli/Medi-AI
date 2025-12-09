@@ -249,7 +249,7 @@ const ChatBotButton = () => {
           onClick={toggleChat}
           className={`w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 transform hover:scale-105 ${isOpen
               ? "rotate-90 bg-red-500"
-              : "bg-blue-700 hover:bg-blue-800"
+              : "bg-emerald-600 dark:bg-emerald-500 hover:bg-emerald-700 dark:hover:bg-emerald-600"
             }`}
         >
           {isOpen ? (
@@ -272,9 +272,9 @@ const ChatBotButton = () => {
       </div>
 
       {isOpen && (
-        <div className="fixed bottom-24 left-6 w-80 sm:w-96 h-[28rem] sm:h-[32rem] bg-white rounded-xl shadow-2xl z-50 flex flex-col border border-slate-200 overflow-hidden">
+        <div className="fixed bottom-24 left-6 w-80 sm:w-96 h-[28rem] sm:h-[32rem] bg-white dark:bg-slate-900 rounded-xl shadow-2xl dark:shadow-slate-900/50 z-50 flex flex-col border border-slate-200 dark:border-slate-700 overflow-hidden transition-colors duration-300">
           {/* Header */}
-          <div className="bg-blue-700 p-4 rounded-t-xl flex justify-between items-center">
+          <div className="bg-emerald-600 dark:bg-emerald-700 p-4 rounded-t-xl flex justify-between items-center">
             <div className="flex items-center space-x-3">
               <img
                 src="/assets/noun-chatbot-1718966-picaai-removebg-preview.jpeg"
@@ -283,7 +283,7 @@ const ChatBotButton = () => {
               />
               <div>
                 <h3 className="text-white font-semibold">Arogya AI</h3>
-                <p className="text-xs text-blue-200">
+                <p className="text-xs text-emerald-100 dark:text-emerald-200">
                   Your personal health assistant
                 </p>
               </div>
@@ -309,17 +309,17 @@ const ChatBotButton = () => {
 
           {/* Language Selector Dropdown */}
           {showLanguageSelector && (
-            <div className="absolute left-4 top-16 w-40 bg-white border border-slate-200 rounded-lg shadow-lg z-10 overflow-hidden">
-              <div className="px-3 py-2 text-xs font-medium text-slate-500 bg-slate-50">
+            <div className="absolute left-4 top-16 w-40 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg dark:shadow-slate-900/50 z-10 overflow-hidden">
+              <div className="px-3 py-2 text-xs font-medium text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-900">
                 Select Language
               </div>
               {languageOptions.map((lang) => (
                 <button
                   key={lang.code}
                   onClick={() => selectLanguage(lang.code)}
-                  className={`w-full text-left px-4 py-2 text-sm hover:bg-blue-50 transition-colors ${selectedLanguage === lang.code
-                      ? "bg-blue-100 text-blue-700 font-medium"
-                      : "text-slate-700"
+                  className={`w-full text-left px-4 py-2 text-sm hover:bg-emerald-50 dark:hover:bg-slate-700 transition-colors ${selectedLanguage === lang.code
+                      ? "bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-400 font-medium"
+                      : "text-slate-700 dark:text-slate-300"
                     }`}
                 >
                   {lang.name}
@@ -331,7 +331,7 @@ const ChatBotButton = () => {
           {/* Chat Container */}
           <div
             ref={chatContainerRef}
-            className="flex-1 p-4 overflow-y-auto bg-slate-50"
+            className="flex-1 p-4 overflow-y-auto bg-slate-50 dark:bg-slate-950"
             style={{ scrollBehavior: "smooth" }}
           >
             <div className="space-y-4">
@@ -343,11 +343,11 @@ const ChatBotButton = () => {
                 >
                   <div
                     className={`max-w-[80%] rounded-lg p-3 text-sm ${message.type === "user"
-                        ? "bg-blue-700 text-white rounded-br-none"
-                        : "bg-white text-slate-800 border border-slate-200 rounded-bl-none"
+                        ? "bg-emerald-600 dark:bg-emerald-500 text-white rounded-br-none"
+                        : "bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-bl-none"
                       }`}
                   >
-                    <div className="prose prose-sm max-w-none">
+                    <div className="prose prose-sm dark:prose-invert max-w-none">
                       <ReactMarkdown remarkPlugins={[remarkGfm]}>
                         {message.content}
                       </ReactMarkdown>
@@ -357,18 +357,18 @@ const ChatBotButton = () => {
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm rounded-bl-none">
+                  <div className="bg-white dark:bg-slate-800 rounded-lg p-4 border border-slate-200 dark:border-slate-700 shadow-sm rounded-bl-none">
                     <div className="flex space-x-2">
                       <div
-                        className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"
+                        className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce"
                         style={{ animationDelay: "0s" }}
                       ></div>
                       <div
-                        className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"
+                        className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce"
                         style={{ animationDelay: "0.2s" }}
                       ></div>
                       <div
-                        className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"
+                        className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce"
                         style={{ animationDelay: "0.4s" }}
                       ></div>
                     </div>
@@ -379,14 +379,14 @@ const ChatBotButton = () => {
           </div>
 
           {/* Input Area */}
-          <div className="border-t border-slate-200 p-3 bg-white">
+          <div className="border-t border-slate-200 dark:border-slate-700 p-3 bg-white dark:bg-slate-900">
             <form onSubmit={handleSubmit} className="flex gap-2 items-center">
               <button
                 type="button"
                 onClick={toggleListening}
                 className={`p-2.5 rounded-full transition-all ${isListening
                     ? "bg-red-500 text-white animate-pulse"
-                    : "bg-slate-100 hover:bg-slate-200 text-slate-600"
+                    : "bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400"
                   }`}
               >
                 <Mic className="w-4 h-4" />
@@ -396,21 +396,21 @@ const ChatBotButton = () => {
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 placeholder={getInputPlaceholder()}
-                className="flex-1 border border-slate-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-slate-800 placeholder-slate-500"
+                className="flex-1 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 placeholder-slate-500 dark:placeholder-slate-400"
                 disabled={isLoading}
               />
               <button
                 type="submit"
                 disabled={isLoading || !inputMessage.trim()}
                 className={`p-2.5 rounded-full transition-all ${isLoading || !inputMessage.trim()
-                    ? "bg-slate-200 text-slate-400"
-                    : "bg-blue-700 hover:bg-blue-800 text-white"
+                    ? "bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500"
+                    : "bg-emerald-600 dark:bg-emerald-500 hover:bg-emerald-700 dark:hover:bg-emerald-600 text-white"
                   }`}
               >
                 <Send className="w-4 h-4" />
               </button>
             </form>
-            <div className="mt-2 text-xs text-center text-slate-400">
+            <div className="mt-2 text-xs text-center text-slate-400 dark:text-slate-500">
               <span>
                 Powered by MediAI •{" "}
                 {

@@ -6,7 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="MediAI - Advanced AI-powered healthcare platform providing comprehensive medical analysis, expert consultations, and emergency services." />
     <meta name="keywords" content="healthcare, AI medical analysis, telemedicine, health consultation, emergency services" />
-    <meta name="theme-color" content="#1d4ed8" />
+    <meta name="theme-color" content="#059669" />
+    
+    <!-- Prevent theme flash - apply dark mode before render -->
+    <script>
+      (function() {
+        const theme = localStorage.getItem('mediai-theme');
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
     
     <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

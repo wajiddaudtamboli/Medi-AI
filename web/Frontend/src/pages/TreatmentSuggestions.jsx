@@ -78,14 +78,14 @@ function TreatmentSuggestions() {
         const sections = parseSection(content, title);
         
         return (
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100 hover:shadow-xl transition-all duration-300">
+            <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-lg dark:shadow-slate-900/50 overflow-hidden border-2 border-gray-100 dark:border-slate-700 hover:shadow-xl dark:hover:shadow-slate-900/70 transition-all duration-300">
                 {/* Card Header */}
-                <div className={`${bgColor} p-6 border-b-4 ${color}`}>
+                <div className={`${bgColor} dark:bg-opacity-20 p-6 border-b-4 ${color}`}>
                     <div className="flex items-center gap-3">
-                        <div className="bg-white p-3 rounded-full shadow-md">
+                        <div className="bg-white dark:bg-slate-800 p-3 rounded-full shadow-md">
                             <Icon className={`w-8 h-8 ${color}`} />
                         </div>
-                        <h3 className="text-2xl font-bold text-gray-800">{title}</h3>
+                        <h3 className="text-2xl font-bold text-gray-800 dark:text-white">{title}</h3>
                     </div>
                 </div>
 
@@ -165,7 +165,7 @@ function TreatmentSuggestions() {
 
                     {/* Display any remaining content */}
                     {Object.keys(sections).length === 0 && (
-                        <div className="text-gray-700 whitespace-pre-wrap">{content}</div>
+                        <div className="text-gray-700 dark:text-slate-300 whitespace-pre-wrap">{content}</div>
                     )}
                 </div>
             </div>
@@ -173,37 +173,37 @@ function TreatmentSuggestions() {
     };
 
     const Section = ({ icon: Icon, title, content, iconColor }) => (
-        <div className="border-l-4 border-gray-200 pl-4 py-2">
+        <div className="border-l-4 border-gray-200 dark:border-slate-600 pl-4 py-2">
             <div className="flex items-start gap-2 mb-2">
                 <Icon className={`w-5 h-5 mt-0.5 ${iconColor} flex-shrink-0`} />
-                <h4 className="font-semibold text-gray-800">{title}</h4>
+                <h4 className="font-semibold text-gray-800 dark:text-white">{title}</h4>
             </div>
-            <div className="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap ml-7">
+            <div className="text-gray-700 dark:text-slate-300 text-sm leading-relaxed whitespace-pre-wrap ml-7">
                 {content}
             </div>
         </div>
     );
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12 px-4">
+        <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-purple-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-12 px-4 transition-colors duration-300">
             <div className="max-w-7xl mx-auto">
                 {/* Page Header */}
                 <div className="text-center mb-12">
                     <div className="flex items-center justify-center gap-3 mb-4">
-                        <Sparkles className="w-12 h-12 text-blue-600 animate-pulse" />
-                        <h1 className="text-4xl md:text-5xl font-bold text-gray-800">
+                        <Sparkles className="w-12 h-12 text-emerald-600 dark:text-emerald-400 animate-pulse" />
+                        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white">
                             AI Treatment Suggestions
                         </h1>
                     </div>
-                    <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                    <p className="text-lg text-gray-600 dark:text-slate-400 max-w-3xl mx-auto">
                         Get comprehensive treatment recommendations using Conventional Medicine, Ayurveda, and Homeopathy
                     </p>
                 </div>
 
                 {/* Input Form */}
                 <div className="max-w-4xl mx-auto mb-12">
-                    <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-xl p-8 border-2 border-gray-100">
-                        <label htmlFor="symptoms" className="block text-lg font-semibold text-gray-800 mb-3">
+                    <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl dark:shadow-slate-900/50 p-8 border-2 border-gray-100 dark:border-slate-700 transition-colors duration-300">
+                        <label htmlFor="symptoms" className="block text-lg font-semibold text-gray-800 dark:text-white mb-3">
                             Describe Your Symptoms
                         </label>
                         <textarea
@@ -211,7 +211,7 @@ function TreatmentSuggestions() {
                             value={symptoms}
                             onChange={(e) => setSymptoms(e.target.value)}
                             placeholder="Example: I have a headache, fever, and body aches for the past 2 days..."
-                            className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all min-h-[150px] text-gray-700 resize-y"
+                            className="w-full px-4 py-3 border-2 border-gray-300 dark:border-slate-600 rounded-xl focus:ring-4 focus:ring-emerald-200 dark:focus:ring-emerald-900/50 focus:border-emerald-500 dark:focus:border-emerald-400 outline-none transition-all min-h-[150px] text-gray-700 dark:text-slate-200 bg-white dark:bg-slate-800 placeholder-slate-500 dark:placeholder-slate-400 resize-y"
                             disabled={loading}
                         />
                         
@@ -219,7 +219,7 @@ function TreatmentSuggestions() {
                             <button
                                 type="submit"
                                 disabled={loading || !symptoms.trim()}
-                                className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                                className="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-500 dark:to-teal-500 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-emerald-700 hover:to-teal-700 dark:hover:from-emerald-600 dark:hover:to-teal-600 disabled:from-gray-400 disabled:to-gray-500 dark:disabled:from-slate-600 dark:disabled:to-slate-700 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                             >
                                 {loading ? (
                                     <span className="flex items-center justify-center gap-2">
@@ -238,7 +238,7 @@ function TreatmentSuggestions() {
                                 <button
                                     type="button"
                                     onClick={handleReset}
-                                    className="px-6 py-4 bg-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-300 transition-all"
+                                    className="px-6 py-4 bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-slate-200 rounded-xl font-semibold hover:bg-gray-300 dark:hover:bg-slate-600 transition-all"
                                 >
                                     Reset
                                 </button>
@@ -250,11 +250,11 @@ function TreatmentSuggestions() {
                 {/* Error Message */}
                 {error && (
                     <div className="max-w-4xl mx-auto mb-8">
-                        <div className="bg-red-50 border-2 border-red-200 rounded-xl p-6 flex items-start gap-3">
-                            <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
+                        <div className="bg-red-50 dark:bg-red-900/30 border-2 border-red-200 dark:border-red-700 rounded-xl p-6 flex items-start gap-3">
+                            <AlertCircle className="w-6 h-6 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
                             <div>
-                                <h3 className="font-semibold text-red-800 mb-1">Error</h3>
-                                <p className="text-red-700">{error}</p>
+                                <h3 className="font-semibold text-red-800 dark:text-red-300 mb-1">Error</h3>
+                                <p className="text-red-700 dark:text-red-400">{error}</p>
                             </div>
                         </div>
                     </div>
@@ -264,12 +264,12 @@ function TreatmentSuggestions() {
                 {results && (
                     <div className="space-y-8">
                         {/* Disclaimer */}
-                        <div className="bg-yellow-50 border-2 border-yellow-300 rounded-xl p-6 max-w-5xl mx-auto">
+                        <div className="bg-yellow-50 dark:bg-yellow-900/30 border-2 border-yellow-300 dark:border-yellow-700 rounded-xl p-6 max-w-5xl mx-auto">
                             <div className="flex items-start gap-3">
-                                <ShieldCheck className="w-6 h-6 text-yellow-700 flex-shrink-0 mt-0.5" />
+                                <ShieldCheck className="w-6 h-6 text-yellow-700 dark:text-yellow-400 flex-shrink-0 mt-0.5" />
                                 <div>
-                                    <h3 className="font-bold text-yellow-900 mb-2">Medical Disclaimer</h3>
-                                    <p className="text-yellow-800 text-sm leading-relaxed">
+                                    <h3 className="font-bold text-yellow-900 dark:text-yellow-300 mb-2">Medical Disclaimer</h3>
+                                    <p className="text-yellow-800 dark:text-yellow-400 text-sm leading-relaxed">
                                         {results.disclaimer || 'These suggestions are AI-generated and for educational purposes only. Always consult a certified medical professional before taking any treatment. This is not a substitute for professional medical advice, diagnosis, or treatment.'}
                                     </p>
                                 </div>
@@ -277,9 +277,9 @@ function TreatmentSuggestions() {
                         </div>
 
                         {/* Symptoms Display */}
-                        <div className="bg-white rounded-xl p-6 shadow-md max-w-5xl mx-auto border-l-4 border-blue-500">
-                            <h3 className="font-semibold text-gray-800 mb-2">Analyzed Symptoms:</h3>
-                            <p className="text-gray-700">{results.symptoms}</p>
+                        <div className="bg-white dark:bg-slate-900 rounded-xl p-6 shadow-md dark:shadow-slate-900/50 max-w-5xl mx-auto border-l-4 border-emerald-500">
+                            <h3 className="font-semibold text-gray-800 dark:text-white mb-2">Analyzed Symptoms:</h3>
+                            <p className="text-gray-700 dark:text-slate-300">{results.symptoms}</p>
                         </div>
 
                         {/* Treatment Cards Grid */}
@@ -288,7 +288,7 @@ function TreatmentSuggestions() {
                                 title="Conventional Medicine"
                                 content={results.conventional}
                                 icon={Pill}
-                                color="text-blue-600"
+                                color="text-blue-600 dark:text-blue-400"
                                 bgColor="bg-blue-50"
                             />
                             
@@ -296,7 +296,7 @@ function TreatmentSuggestions() {
                                 title="Ayurvedic Treatment"
                                 content={results.ayurvedic}
                                 icon={Leaf}
-                                color="text-green-600"
+                                color="text-green-600 dark:text-green-400"
                                 bgColor="bg-green-50"
                             />
                             
@@ -304,26 +304,26 @@ function TreatmentSuggestions() {
                                 title="Homeopathic Treatment"
                                 content={results.homeopathic}
                                 icon={Sparkles}
-                                color="text-purple-600"
+                                color="text-purple-600 dark:text-purple-400"
                                 bgColor="bg-purple-50"
                             />
                         </div>
 
                         {/* Action Footer */}
                         <div className="text-center pt-8">
-                            <p className="text-gray-600 mb-4">
+                            <p className="text-gray-600 dark:text-slate-400 mb-4">
                                 Need personalized consultation?
                             </p>
                             <div className="flex flex-wrap justify-center gap-4">
                                 <a
                                     href="/telemedicine"
-                                    className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-all shadow-md hover:shadow-lg"
+                                    className="px-6 py-3 bg-emerald-600 dark:bg-emerald-500 text-white rounded-lg font-semibold hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-all shadow-md hover:shadow-lg"
                                 >
                                     Book Video Consultation
                                 </a>
                                 <a
                                     href="/chat"
-                                    className="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-all shadow-md hover:shadow-lg"
+                                    className="px-6 py-3 bg-purple-600 dark:bg-purple-500 text-white rounded-lg font-semibold hover:bg-purple-700 dark:hover:bg-purple-600 transition-all shadow-md hover:shadow-lg"
                                 >
                                     Chat with AI Assistant
                                 </a>
@@ -336,15 +336,15 @@ function TreatmentSuggestions() {
                 {loading && (
                     <div className="text-center py-20">
                         <div className="inline-block">
-                            <svg className="animate-spin h-16 w-16 text-blue-600" viewBox="0 0 24 24">
+                            <svg className="animate-spin h-16 w-16 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24">
                                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                             </svg>
                         </div>
-                        <p className="mt-6 text-xl text-gray-600 font-semibold">
+                        <p className="mt-6 text-xl text-gray-600 dark:text-slate-300 font-semibold">
                             Analyzing your symptoms...
                         </p>
-                        <p className="mt-2 text-gray-500">
+                        <p className="mt-2 text-gray-500 dark:text-slate-400">
                             Generating personalized treatment suggestions
                         </p>
                     </div>
@@ -353,26 +353,26 @@ function TreatmentSuggestions() {
                 {/* Empty State */}
                 {!results && !loading && !error && (
                     <div className="text-center py-16 max-w-2xl mx-auto">
-                        <div className="bg-white rounded-2xl shadow-lg p-10 border-2 border-gray-100">
-                            <Sparkles className="w-20 h-20 text-blue-500 mx-auto mb-6" />
-                            <h3 className="text-2xl font-bold text-gray-800 mb-3">
+                        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-lg dark:shadow-slate-900/50 p-10 border-2 border-gray-100 dark:border-slate-700">
+                            <Sparkles className="w-20 h-20 text-emerald-500 dark:text-emerald-400 mx-auto mb-6" />
+                            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-3">
                                 How It Works
                             </h3>
-                            <div className="text-left space-y-4 text-gray-700">
+                            <div className="text-left space-y-4 text-gray-700 dark:text-slate-300">
                                 <div className="flex items-start gap-3">
-                                    <span className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600">1</span>
+                                    <span className="flex-shrink-0 w-8 h-8 bg-emerald-100 dark:bg-emerald-900/50 rounded-full flex items-center justify-center font-bold text-emerald-600 dark:text-emerald-400">1</span>
                                     <p>Describe your symptoms in detail in the text box above</p>
                                 </div>
                                 <div className="flex items-start gap-3">
-                                    <span className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600">2</span>
+                                    <span className="flex-shrink-0 w-8 h-8 bg-emerald-100 dark:bg-emerald-900/50 rounded-full flex items-center justify-center font-bold text-emerald-600 dark:text-emerald-400">2</span>
                                     <p>Our AI analyzes your symptoms using advanced medical knowledge</p>
                                 </div>
                                 <div className="flex items-start gap-3">
-                                    <span className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600">3</span>
+                                    <span className="flex-shrink-0 w-8 h-8 bg-emerald-100 dark:bg-emerald-900/50 rounded-full flex items-center justify-center font-bold text-emerald-600 dark:text-emerald-400">3</span>
                                     <p>Get comprehensive treatment suggestions from three different medical approaches</p>
                                 </div>
                                 <div className="flex items-start gap-3">
-                                    <span className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600">4</span>
+                                    <span className="flex-shrink-0 w-8 h-8 bg-emerald-100 dark:bg-emerald-900/50 rounded-full flex items-center justify-center font-bold text-emerald-600 dark:text-emerald-400">4</span>
                                     <p>Always consult a healthcare professional before starting any treatment</p>
                                 </div>
                             </div>

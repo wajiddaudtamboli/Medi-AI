@@ -317,12 +317,12 @@ const HealthcareCards = () => {
 
     const getColorClasses = (color) => {
         const colors = {
-            blue: { bg: "bg-blue-50", icon: "bg-blue-100 text-blue-700", hover: "hover:border-blue-300" },
-            purple: { bg: "bg-purple-50", icon: "bg-purple-100 text-purple-700", hover: "hover:border-purple-300" },
-            pink: { bg: "bg-pink-50", icon: "bg-pink-100 text-pink-700", hover: "hover:border-pink-300" },
-            green: { bg: "bg-green-50", icon: "bg-green-100 text-green-700", hover: "hover:border-green-300" },
-            red: { bg: "bg-red-50", icon: "bg-red-100 text-red-700", hover: "hover:border-red-300" },
-            cyan: { bg: "bg-cyan-50", icon: "bg-cyan-100 text-cyan-700", hover: "hover:border-cyan-300" }
+            blue: { bg: "bg-blue-50 dark:bg-blue-900/30", icon: "bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-400", hover: "hover:border-blue-300 dark:hover:border-blue-600" },
+            purple: { bg: "bg-purple-50 dark:bg-purple-900/30", icon: "bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-400", hover: "hover:border-purple-300 dark:hover:border-purple-600" },
+            pink: { bg: "bg-pink-50 dark:bg-pink-900/30", icon: "bg-pink-100 dark:bg-pink-900/50 text-pink-700 dark:text-pink-400", hover: "hover:border-pink-300 dark:hover:border-pink-600" },
+            green: { bg: "bg-emerald-50 dark:bg-emerald-900/30", icon: "bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-400", hover: "hover:border-emerald-300 dark:hover:border-emerald-600" },
+            red: { bg: "bg-red-50 dark:bg-red-900/30", icon: "bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-400", hover: "hover:border-red-300 dark:hover:border-red-600" },
+            cyan: { bg: "bg-cyan-50 dark:bg-cyan-900/30", icon: "bg-cyan-100 dark:bg-cyan-900/50 text-cyan-700 dark:text-cyan-400", hover: "hover:border-cyan-300 dark:hover:border-cyan-600" }
         };
         return colors[color] || colors.blue;
     };
@@ -335,7 +335,7 @@ const HealthcareCards = () => {
                     className={`flex items-center gap-2 px-6 py-3 rounded-full font-medium shadow-md transition-all duration-300 hover:shadow-lg ${
                         isListening 
                             ? "bg-red-500 text-white hover:bg-red-600" 
-                            : "bg-blue-700 text-white hover:bg-blue-800"
+                            : "bg-emerald-600 dark:bg-emerald-500 text-white hover:bg-emerald-700 dark:hover:bg-emerald-600"
                     }`}
                     onClick={toggleListening}
                 >
@@ -353,14 +353,14 @@ const HealthcareCards = () => {
                     return (
                         <button
                             key={index}
-                            className={`${colorClasses.bg} border border-slate-200 ${colorClasses.hover} rounded-xl text-left p-6 hover:shadow-lg transform transition-all duration-300 hover:-translate-y-1 cursor-pointer group`}
+                            className={`${colorClasses.bg} border border-slate-200 dark:border-slate-700 ${colorClasses.hover} rounded-xl text-left p-6 hover:shadow-lg dark:hover:shadow-slate-900/50 transform transition-all duration-300 hover:-translate-y-1 cursor-pointer group`}
                             onClick={() => handleCardClick(card.route)}
                         >
                             <div className={`${colorClasses.icon} w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                                 <IconComponent className="w-7 h-7" />
                             </div>
-                            <h3 className="text-xl font-semibold text-slate-900 mb-2">{card.title}</h3>
-                            <p className="text-slate-600 text-sm">{card.description}</p>
+                            <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">{card.title}</h3>
+                            <p className="text-slate-600 dark:text-slate-400 text-sm">{card.description}</p>
                         </button>
                     );
                 })}

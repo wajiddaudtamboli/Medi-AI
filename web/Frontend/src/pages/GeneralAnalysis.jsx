@@ -438,20 +438,20 @@ export default function GeneralAnalysis() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8">
-            <div className="max-w-4xl mx-auto">
+        <div className="min-h-screen bg-gray-50 dark:bg-slate-950 py-8 transition-colors duration-300">
+            <div className="max-w-4xl mx-auto px-4">
                 {/* Header */}
                 <div className="text-center mb-12">
                     <div className="flex items-center justify-center gap-3 mb-4">
-                        <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <div className="w-10 h-10 bg-emerald-600 dark:bg-emerald-500 rounded-lg flex items-center justify-center">
                             <div className="w-6 h-6 border-2 border-white rounded-full border-t-transparent animate-spin"></div>
                         </div>
-                        <h1 className="text-3xl font-bold text-gray-800">MedicalVision AI Assistant</h1>
+                        <h1 className="text-3xl font-bold text-gray-800 dark:text-white">MedicalVision AI Assistant</h1>
                     </div>
                 </div>
 
                 {/* Upload Section */}
-                <div className="bg-white rounded-lg shadow-sm mb-8 p-8">
+                <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm dark:shadow-slate-900/50 mb-8 p-8 border border-slate-200 dark:border-slate-700 transition-colors duration-300">
                     {/* Live Camera Section */}
                     {isLiveCameraActive && (
                         <div className="mb-8">
@@ -480,7 +480,7 @@ export default function GeneralAnalysis() {
                                     </button>
                                 </div>
                             </div>
-                            <p className="text-center text-gray-600 mt-2">
+                            <p className="text-center text-gray-600 dark:text-slate-400 mt-2">
                                 Position your camera to capture the area you want to analyze, then click the camera button to take a snapshot.
                             </p>
                         </div>
@@ -488,8 +488,8 @@ export default function GeneralAnalysis() {
 
                     <div
                         className={`border-2 border-dashed rounded-lg p-16 text-center transition-colors ${dragActive
-                                ? 'border-blue-400 bg-blue-50'
-                                : 'border-gray-300 hover:border-gray-400'
+                                ? 'border-emerald-400 bg-emerald-50 dark:bg-emerald-900/30'
+                                : 'border-gray-300 dark:border-slate-600 hover:border-gray-400 dark:hover:border-slate-500'
                             }`}
                         onDrop={handleDrop}
                         onDragOver={handleDragOver}
@@ -497,9 +497,9 @@ export default function GeneralAnalysis() {
                     >
                         {!imagePreview ? (
                             <div>
-                                <Upload className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                                <h3 className="text-xl font-semibold text-gray-700 mb-2">Upload an image for analysis</h3>
-                                <p className="text-gray-500 mb-6">Click to browse, drag and drop, or use live camera</p>
+                                <Upload className="w-16 h-16 text-gray-400 dark:text-slate-500 mx-auto mb-4" />
+                                <h3 className="text-xl font-semibold text-gray-700 dark:text-white mb-2">Upload an image for analysis</h3>
+                                <p className="text-gray-500 dark:text-slate-400 mb-6">Click to browse, drag and drop, or use live camera</p>
 
                                 <input
                                     type="file"
@@ -512,14 +512,14 @@ export default function GeneralAnalysis() {
                                 <div className="flex gap-4 justify-center">
                                     <button
                                         onClick={() => fileInputRef.current?.click()}
-                                        className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                                        className="px-6 py-2 bg-emerald-600 dark:bg-emerald-500 text-white rounded-lg hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors flex items-center gap-2"
                                     >
                                         <Upload className="w-4 h-4" />
                                         Browse Files
                                     </button>
                                     <button
                                         onClick={startLiveCamera}
-                                        className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
+                                        className="px-6 py-2 bg-cyan-600 dark:bg-cyan-500 text-white rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-600 transition-colors flex items-center gap-2"
                                     >
                                         <Camera className="w-4 h-4" />
                                         Go Live
@@ -536,7 +536,7 @@ export default function GeneralAnalysis() {
 
                                 {/* Problem Description Field */}
                                 <div className="mb-6">
-                                    <label htmlFor="problemDescription" className="block text-sm font-medium text-gray-700 mb-2">
+                                    <label htmlFor="problemDescription" className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">
                                         Describe your problem (optional)
                                     </label>
                                     <textarea
@@ -544,7 +544,7 @@ export default function GeneralAnalysis() {
                                         value={problemDescription}
                                         onChange={(e) => setProblemDescription(e.target.value)}
                                         placeholder="Enter any symptoms or concerns you'd like to share..."
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
+                                        className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-emerald-500 dark:focus:border-emerald-400 resize-none bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400"
                                         rows="3"
                                     />
                                 </div>
@@ -553,7 +553,7 @@ export default function GeneralAnalysis() {
                                     <button
                                         onClick={handleUploadAndAnalyze}
                                         disabled={isAnalyzing}
-                                        className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed transition-colors"
+                                        className="px-6 py-2 bg-emerald-600 dark:bg-emerald-500 text-white rounded-lg hover:bg-emerald-700 dark:hover:bg-emerald-600 disabled:bg-emerald-400 dark:disabled:bg-emerald-700 disabled:cursor-not-allowed transition-colors"
                                     >
                                         {isAnalyzing ? (
                                             <span className="flex items-center gap-2">
@@ -566,7 +566,7 @@ export default function GeneralAnalysis() {
                                     </button>
                                     <button
                                         onClick={resetAnalysis}
-                                        className="px-6 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+                                        className="px-6 py-2 bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-200 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors"
                                     >
                                         Reset
                                     </button>
@@ -577,7 +577,7 @@ export default function GeneralAnalysis() {
                 </div>
 
                 {/* Analysis Results Section */}
-                <div className="bg-white rounded-lg shadow-sm p-8">
+                <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm dark:shadow-slate-900/50 p-8 border border-slate-200 dark:border-slate-700 transition-colors duration-300">
                     <AnalysisResults
                         analysis={analysis}
                         isAnalyzing={isAnalyzing}
@@ -593,7 +593,7 @@ export default function GeneralAnalysis() {
                 </div>
 
                 {/* Disclaimer */}
-                <div className="text-center mt-8 text-gray-600">
+                <div className="text-center mt-8 text-gray-600 dark:text-slate-400">
                     <p className="mb-1">This is a demonstration of AI-powered medical image analysis.</p>
                     <p>For actual medical advice, please consult with healthcare professionals.</p>
                 </div>

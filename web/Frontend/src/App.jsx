@@ -39,7 +39,7 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       <Navbar />
       <main className="flex-1 pt-16 md:pt-20">
         <Routes>

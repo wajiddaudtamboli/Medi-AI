@@ -159,14 +159,14 @@ Remember: This is AI assistance only. For severe symptoms, always call emergency
         {/* AI Emergency Assessment Modal */}
         {showAssessment && (
             <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[60] p-4">
-                <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+                <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl dark:shadow-slate-900/50 w-full max-w-2xl max-h-[90vh] overflow-y-auto transition-colors duration-300">
                     <div className="p-6">
                         <div className="flex justify-between items-center mb-6">
                             <div className="flex items-center space-x-3">
-                                <div className="p-2 bg-purple-100 rounded-full">
-                                    <Brain className="w-6 h-6 text-purple-600" />
+                                <div className="p-2 bg-purple-100 dark:bg-purple-900/50 rounded-full">
+                                    <Brain className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                                 </div>
-                                <h2 className="text-2xl font-bold text-gray-900">AI Emergency Assessment</h2>
+                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">AI Emergency Assessment</h2>
                             </div>
                             <button
                                 onClick={() => {
@@ -174,22 +174,22 @@ Remember: This is AI assistance only. For severe symptoms, always call emergency
                                     setSymptoms('');
                                     setAiAssessment('');
                                 }}
-                                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                                className="p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-full transition-colors"
                             >
-                                <X className="w-6 h-6 text-gray-500" />
+                                <X className="w-6 h-6 text-gray-500 dark:text-slate-400" />
                             </button>
                         </div>
 
                         <div className="space-y-6">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">
                                     Describe your symptoms in detail:
                                 </label>
                                 <textarea
                                     value={symptoms}
                                     onChange={(e) => setSymptoms(e.target.value)}
                                     placeholder="Please describe what you're experiencing - symptoms, pain level, duration, any other relevant details..."
-                                    className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none h-32"
+                                    className="w-full p-4 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent resize-none h-32 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400"
                                     disabled={assessmentLoading}
                                 />
                             </div>
@@ -198,7 +198,7 @@ Remember: This is AI assistance only. For severe symptoms, always call emergency
                                 <button
                                     onClick={handleAIAssessment}
                                     disabled={!symptoms.trim() || assessmentLoading}
-                                    className="flex-1 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-300 text-white py-3 px-6 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2"
+                                    className="flex-1 bg-purple-600 hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-600 disabled:bg-gray-300 dark:disabled:bg-slate-700 text-white py-3 px-6 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2"
                                 >
                                     {assessmentLoading ? (
                                         <>
@@ -215,12 +215,12 @@ Remember: This is AI assistance only. For severe symptoms, always call emergency
                             </div>
 
                             {aiAssessment && (
-                                <div className="mt-6 p-6 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl border border-purple-200">
-                                    <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                                        <Brain className="w-5 h-5 text-purple-600 mr-2" />
+                                <div className="mt-6 p-6 bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/30 dark:to-indigo-900/30 rounded-xl border border-purple-200 dark:border-purple-700">
+                                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                                        <Brain className="w-5 h-5 text-purple-600 dark:text-purple-400 mr-2" />
                                         Emergency Assessment Results
                                     </h3>
-                                    <div className="prose prose-sm max-w-none text-gray-700">
+                                    <div className="prose prose-sm dark:prose-invert max-w-none text-gray-700 dark:text-slate-300">
                                         {aiAssessment.split('\n').map((line, index) => (
                                             line.trim() ? (
                                                 <p key={index} className="mb-2">{line}</p>
@@ -228,8 +228,8 @@ Remember: This is AI assistance only. For severe symptoms, always call emergency
                                         ))}
                                     </div>
 
-                                    <div className="mt-6 pt-4 border-t border-purple-200">
-                                        <p className="text-sm text-purple-700 font-medium mb-3">Emergency Actions:</p>
+                                    <div className="mt-6 pt-4 border-t border-purple-200 dark:border-purple-700">
+                                        <p className="text-sm text-purple-700 dark:text-purple-400 font-medium mb-3">Emergency Actions:</p>
                                         <div className="flex space-x-3">
                                             <button
                                                 onClick={handleEmergencyCall}
