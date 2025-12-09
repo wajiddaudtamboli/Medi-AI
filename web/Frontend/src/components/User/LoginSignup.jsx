@@ -69,18 +69,18 @@ const LoginSignup = () => {
 
     return (
         <div className="min-h-screen relative overflow-hidden flex items-center justify-center">
-            {/* Dynamic Background */}
-            <div className="fixed inset-0 bg-gradient-to-br from-blue-900 to-indigo-900 z-0">
+            {/* Dynamic Background - Medical Emerald Theme */}
+            <div className="fixed inset-0 bg-gradient-to-br from-emerald-900 via-teal-900 to-slate-900 dark:from-slate-950 dark:via-emerald-950 dark:to-slate-950 z-0">
                 {/* Animated background elements */}
                 <div className="absolute inset-0 overflow-hidden">
                     {/* Glowing orbs */}
-                    <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-400 rounded-full mix-blend-soft-light blur-3xl opacity-60 animate-pulse"></div>
+                    <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-400 rounded-full mix-blend-soft-light blur-3xl opacity-60 animate-pulse"></div>
                     <div
-                        className="absolute top-3/4 right-1/4 w-64 h-64 bg-indigo-500 rounded-full mix-blend-soft-light blur-3xl opacity-50"
+                        className="absolute top-3/4 right-1/4 w-64 h-64 bg-teal-500 rounded-full mix-blend-soft-light blur-3xl opacity-50"
                         style={{ animationDelay: "2s", animationDuration: "8s" }}
                     ></div>
                     <div
-                        className="absolute bottom-1/4 left-1/2 w-80 h-80 bg-cyan-400 rounded-full mix-blend-soft-light blur-3xl opacity-40 animate-pulse"
+                        className="absolute bottom-1/4 left-1/2 w-80 h-80 bg-emerald-300 rounded-full mix-blend-soft-light blur-3xl opacity-40 animate-pulse"
                         style={{ animationDelay: "1s", animationDuration: "7s" }}
                     ></div>
 
@@ -115,7 +115,7 @@ const LoginSignup = () => {
                         xmlns="http://www.w3.org/2000/svg"
                     >
                         <path
-                            fill="#0099ff"
+                            fill="#10b981"
                             fillOpacity="1"
                             d="M0,160L48,144C96,128,192,96,288,85.3C384,75,480,85,576,117.3C672,149,768,203,864,202.7C960,203,1056,149,1152,128C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
                         ></path>
@@ -136,9 +136,9 @@ const LoginSignup = () => {
 
             {/* Content area - split card design */}
             <div className="container mx-auto px-6 relative z-10">
-                <div className="flex flex-col lg:flex-row w-full max-w-6xl mx-auto rounded-3xl overflow-hidden shadow-2xl bg-white bg-opacity-10 backdrop-blur-xl border border-white/20">
+                <div className="flex flex-col lg:flex-row w-full max-w-6xl mx-auto rounded-3xl overflow-hidden shadow-2xl bg-white/10 dark:bg-slate-900/50 backdrop-blur-xl border border-white/20 dark:border-emerald-900/30">
                     {/* Left Section - Branding & Info */}
-                    <div className="lg:w-5/12 relative bg-gradient-to-br from-blue-600 to-blue-800 p-12 text-white overflow-hidden">
+                    <div className="lg:w-5/12 relative bg-gradient-to-br from-emerald-600 to-teal-700 dark:from-emerald-800 dark:to-teal-900 p-12 text-white overflow-hidden">
                         {/* Abstract shapes */}
                         <div className="absolute -right-24 -top-24 w-64 h-64 bg-white opacity-10 rounded-full"></div>
                         <div className="absolute -right-32 -bottom-32 w-80 h-80 bg-white opacity-10 rounded-full"></div>
@@ -146,8 +146,8 @@ const LoginSignup = () => {
                         {/* Content */}
                         <div className="relative z-10 h-full flex flex-col">
                             <div className="mb-10">
-                                <h1 className="text-4xl font-bold mb-6">Healthcare Portal</h1>
-                                <p className="text-blue-100 text-lg">
+                                <h1 className="text-4xl font-bold mb-6">MediAI Portal</h1>
+                                <p className="text-emerald-100 text-lg">
                                     Access your healthcare journey with a secure, personalized
                                     experience.
                                 </p>
@@ -156,19 +156,19 @@ const LoginSignup = () => {
                             <div className="mt-auto space-y-6">
                                 <div className="flex items-center space-x-4">
                                     <div className="bg-white/10 p-2 rounded-full">
-                                        <CheckCircle size={20} className="text-cyan-300" />
+                                        <CheckCircle size={20} className="text-emerald-300" />
                                     </div>
                                     <p>Secure and HIPAA compliant platform</p>
                                 </div>
                                 <div className="flex items-center space-x-4">
                                     <div className="bg-white/10 p-2 rounded-full">
-                                        <CheckCircle size={20} className="text-cyan-300" />
+                                        <CheckCircle size={20} className="text-emerald-300" />
                                     </div>
                                     <p>Connect with healthcare professionals</p>
                                 </div>
                                 <div className="flex items-center space-x-4">
                                     <div className="bg-white/10 p-2 rounded-full">
-                                        <CheckCircle size={20} className="text-cyan-300" />
+                                        <CheckCircle size={20} className="text-emerald-300" />
                                     </div>
                                     <p>Access your medical records anytime</p>
                                 </div>
@@ -203,8 +203,8 @@ const LoginSignup = () => {
                                 <button
                                     onClick={() => setAuthMode("login")}
                                     className={`m-2 px-4 py-2 text-sm rounded-lg transition-all ${authMode === "login"
-                                        ? "bg-white text-blue-800 shadow-md"
-                                        : "text-blue-100 hover:text-white"
+                                        ? "bg-white text-emerald-800 shadow-md"
+                                        : "text-emerald-100 hover:text-white"
                                         }`}
                                 >
                                     Login
@@ -212,8 +212,8 @@ const LoginSignup = () => {
                                 <button
                                     onClick={() => setAuthMode("signup")}
                                     className={`m-2 px-4 py-2 text-sm rounded-lg transition-all ${authMode === "signup"
-                                        ? "bg-white text-blue-800 shadow-md"
-                                        : "text-blue-100 hover:text-white"
+                                        ? "bg-white text-emerald-800 shadow-md"
+                                        : "text-emerald-100 hover:text-white"
                                         }`}
                                 >
                                     Sign Up
@@ -235,12 +235,12 @@ const LoginSignup = () => {
                         <form onSubmit={handleSubmit} className="space-y-5">
                             {authMode === "signup" && (
                                 <div>
-                                    <label className="block text-sm font-medium text-blue-100 mb-2">
+                                    <label className="block text-sm font-medium text-emerald-100 mb-2">
                                         Full Name
                                     </label>
                                     <div className="relative">
                                         <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                                            <User className="text-blue-300" size={18} />
+                                            <User className="text-emerald-300" size={18} />
                                         </div>
                                         <input
                                             type="text"
@@ -248,7 +248,7 @@ const LoginSignup = () => {
                                             placeholder="John Doe"
                                             value={formData.name}
                                             onChange={handleInputChange}
-                                            className="w-full pl-12 pr-4 py-4 bg-white/10 border border-blue-300/30 text-black rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition-all placeholder:text-blue-200/50"
+                                            className="w-full pl-12 pr-4 py-4 bg-white/10 border border-emerald-300/30 text-white rounded-xl focus:ring-2 focus:ring-emerald-400 focus:border-transparent outline-none transition-all placeholder:text-emerald-200/50"
                                             style={{ textIndent: "32px" }}
                                             required
                                         />
@@ -257,12 +257,12 @@ const LoginSignup = () => {
                             )}
 
                             <div>
-                                <label className="block text-3xl font-medium text-blue-100 mb-2">
+                                <label className="block text-sm font-medium text-emerald-100 mb-2">
                                     Email Address
                                 </label>
                                 <div className="relative">
                                     <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                                        <Mail className="text-blue-300" size={18} />
+                                        <Mail className="text-emerald-300" size={18} />
                                     </div>
                                     <input
                                         type="text"
@@ -270,7 +270,7 @@ const LoginSignup = () => {
                                         placeholder="you@example.com"
                                         value={formData.contact}
                                         onChange={handleInputChange}
-                                        className="w-full pl-12 pr-4 py-4 bg-white/10 border border-blue-300/30 text-black rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition-all placeholder:text-blue-200/50"
+                                        className="w-full pl-12 pr-4 py-4 bg-white/10 border border-emerald-300/30 text-white rounded-xl focus:ring-2 focus:ring-emerald-400 focus:border-transparent outline-none transition-all placeholder:text-emerald-200/50"
                                         style={{ textIndent: "32px" }}
                                         required
                                     />
@@ -278,12 +278,12 @@ const LoginSignup = () => {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-blue-100 mb-2">
+                                <label className="block text-sm font-medium text-emerald-100 mb-2">
                                     Password
                                 </label>
                                 <div className="relative">
                                     <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                                        <Lock className="text-blue-300" size={18} />
+                                        <Lock className="text-emerald-300" size={18} />
                                     </div>
                                     <input
                                         type="password"
@@ -291,7 +291,7 @@ const LoginSignup = () => {
                                         placeholder="••••••••"
                                         value={formData.password}
                                         onChange={handleInputChange}
-                                        className="w-full pl-12 pr-4 py-4 bg-white/10 border border-blue-300/30 text-black rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition-all placeholder:text-blue-200/50"
+                                        className="w-full pl-12 pr-4 py-4 bg-white/10 border border-emerald-300/30 text-white rounded-xl focus:ring-2 focus:ring-emerald-400 focus:border-transparent outline-none transition-all placeholder:text-emerald-200/50"
                                         style={{ textIndent: "32px" }}
                                         required
                                     />
@@ -301,14 +301,14 @@ const LoginSignup = () => {
                             {authMode === "signup" && (
                                 <>
                                     <div className="pt-2">
-                                        <label className="block text-sm font-medium text-blue-100 mb-3">
+                                        <label className="block text-sm font-medium text-emerald-100 mb-3">
                                             Select Role
                                         </label>
                                         <div className="grid grid-cols-2 gap-4">
                                             <label
                                                 className={`relative flex flex-col items-center p-4 border rounded-xl cursor-pointer transition-all ${role === "patient"
-                                                    ? "bg-blue-600 border-blue-400 shadow-lg shadow-blue-800/30"
-                                                    : "bg-white/10 border-blue-300/30 hover:bg-white/20"
+                                                    ? "bg-emerald-600 border-emerald-400 shadow-lg shadow-emerald-800/30"
+                                                    : "bg-white/10 border-emerald-300/30 hover:bg-white/20"
                                                     }`}
                                             >
                                                 <input
@@ -321,35 +321,35 @@ const LoginSignup = () => {
                                                 />
                                                 <div
                                                     className={`w-12 h-12 mb-2 rounded-full flex items-center justify-center ${role === "patient"
-                                                        ? "bg-blue-500"
-                                                        : "bg-blue-700/50"
+                                                        ? "bg-emerald-500"
+                                                        : "bg-emerald-700/50"
                                                         }`}
                                                 >
                                                     <User
                                                         size={24}
                                                         className={
                                                             role === "patient"
-                                                                ? "text-black"
-                                                                : "text-blue-300"
+                                                                ? "text-white"
+                                                                : "text-emerald-300"
                                                         }
                                                     />
                                                 </div>
                                                 <span
-                                                    className={`text-center ${role === "patient" ? "text-black" : "text-blue-100"
+                                                    className={`text-center ${role === "patient" ? "text-white" : "text-emerald-100"
                                                         }`}
                                                 >
                                                     Patient
                                                 </span>
                                                 {role === "patient" && (
-                                                    <div className="absolute top-2 right-2 bg-blue-500 p-1 rounded-full">
+                                                    <div className="absolute top-2 right-2 bg-emerald-500 p-1 rounded-full">
                                                         <CheckCircle size={16} className="text-white" />
                                                     </div>
                                                 )}
                                             </label>
                                             <label
                                                 className={`relative flex flex-col items-center p-4 border rounded-xl cursor-pointer transition-all ${role === "doctor"
-                                                    ? "bg-blue-600 border-blue-400 shadow-lg shadow-blue-800/30"
-                                                    : "bg-white/10 border-blue-300/30 hover:bg-white/20"
+                                                    ? "bg-emerald-600 border-emerald-400 shadow-lg shadow-emerald-800/30"
+                                                    : "bg-white/10 border-emerald-300/30 hover:bg-white/20"
                                                     }`}
                                             >
                                                 <input
@@ -361,24 +361,24 @@ const LoginSignup = () => {
                                                     className="sr-only" // Hide the actual radio button
                                                 />
                                                 <div
-                                                    className={`w-12 h-12 mb-2 rounded-full flex items-center justify-center ${role === "doctor" ? "bg-blue-500" : "bg-blue-700/50"
+                                                    className={`w-12 h-12 mb-2 rounded-full flex items-center justify-center ${role === "doctor" ? "bg-emerald-500" : "bg-emerald-700/50"
                                                         }`}
                                                 >
                                                     <Stethoscope
                                                         size={24}
                                                         className={
-                                                            role === "doctor" ? "text-white" : "text-blue-300"
+                                                            role === "doctor" ? "text-white" : "text-emerald-300"
                                                         }
                                                     />
                                                 </div>
                                                 <span
-                                                    className={`text-center ${role === "doctor" ? "text-white" : "text-blue-100"
+                                                    className={`text-center ${role === "doctor" ? "text-white" : "text-emerald-100"
                                                         }`}
                                                 >
                                                     Doctor
                                                 </span>
                                                 {role === "doctor" && (
-                                                    <div className="absolute top-2 right-2 bg-blue-500 p-1 rounded-full">
+                                                    <div className="absolute top-2 right-2 bg-emerald-500 p-1 rounded-full">
                                                         <CheckCircle size={16} className="text-white" />
                                                     </div>
                                                 )}
@@ -387,14 +387,14 @@ const LoginSignup = () => {
                                     </div>
 
                                     {role === "doctor" && (
-                                        <div className="space-y-5 mt-4 pt-4 border-t border-blue-500/20">
+                                        <div className="space-y-5 mt-4 pt-4 border-t border-emerald-500/20">
                                             <div>
-                                                <label className="block text-sm font-medium text-blue-100 mb-2">
+                                                <label className="block text-sm font-medium text-emerald-100 mb-2">
                                                     Medical Speciality
                                                 </label>
                                                 <div className="relative">
                                                     <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                                                        <Stethoscope className="text-blue-300" size={18} />
+                                                        <Stethoscope className="text-emerald-300" size={18} />
                                                     </div>
                                                     <input
                                                         type="text"
@@ -402,21 +402,21 @@ const LoginSignup = () => {
                                                         placeholder="e.g. Cardiology, Pediatrics"
                                                         value={formData.speciality}
                                                         onChange={handleInputChange}
-                                                        className="w-full pl-12 pr-4 py-4 bg-white/10 border border-blue-300/30 text-black rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition-all placeholder:text-blue-200/50"
+                                                        className="w-full pl-12 pr-4 py-4 bg-white/10 border border-emerald-300/30 text-white rounded-xl focus:ring-2 focus:ring-emerald-400 focus:border-transparent outline-none transition-all placeholder:text-emerald-200/50"
                                                         style={{ textIndent: "32px" }}
                                                         required
                                                     />
                                                 </div>
                                             </div>
-                                            <label className="flex items-center space-x-3 p-4 border border-blue-300/30 bg-white/10 rounded-xl cursor-pointer hover:bg-white/20 transition-all">
+                                            <label className="flex items-center space-x-3 p-4 border border-emerald-300/30 bg-white/10 rounded-xl cursor-pointer hover:bg-white/20 transition-all">
                                                 <input
                                                     type="checkbox"
                                                     name="availability"
                                                     checked={formData.availability}
                                                     onChange={handleInputChange}
-                                                    className="form-checkbox h-5 w-5 text-blue-600 rounded-md bg-white/20 border-blue-300/50"
+                                                    className="form-checkbox h-5 w-5 text-emerald-600 rounded-md bg-white/20 border-emerald-300/50"
                                                 />
-                                                <span className="text-blue-100">
+                                                <span className="text-emerald-100">
                                                     Available for new appointments
                                                 </span>
                                             </label>
@@ -429,8 +429,8 @@ const LoginSignup = () => {
                                 type="submit"
                                 disabled={loading}
                                 className={`w-full mt-8 py-4 px-6 rounded-xl font-medium text-white shadow-xl transition-all ${loading
-                                    ? "bg-blue-700/50 cursor-not-allowed"
-                                    : "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 cursor-pointer"
+                                    ? "bg-emerald-700/50 cursor-not-allowed"
+                                    : "bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 cursor-pointer"
                                     }`}
                             >
                                 {loading ? (
@@ -465,8 +465,8 @@ const LoginSignup = () => {
                             </button>
                         </form>
 
-                        <div className="mt-8 pt-6 border-t border-blue-500/20 text-center">
-                            <p className="text-blue-200">
+                        <div className="mt-8 pt-6 border-t border-emerald-500/20 text-center">
+                            <p className="text-emerald-200">
                                 {authMode === "login"
                                     ? "Don't have an account? "
                                     : "Already have an account? "}
@@ -474,7 +474,7 @@ const LoginSignup = () => {
                                     onClick={() =>
                                         setAuthMode(authMode === "login" ? "signup" : "login")
                                     }
-                                    className="text-cyan-300 hover:text-cyan-100 font-semibold transition-colors"
+                                    className="text-teal-300 hover:text-teal-100 font-semibold transition-colors"
                                 >
                                     {authMode === "login" ? "Sign Up" : "Sign In"}
                                 </button>

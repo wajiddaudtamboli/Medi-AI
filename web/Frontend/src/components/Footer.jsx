@@ -65,13 +65,13 @@ function Footer() {
             <div>
               <h3 className="font-semibold text-slate-900 dark:text-emerald-300 mb-4 md:mb-6">Contact Us</h3>
               <div className="text-slate-600 dark:text-slate-400 space-y-3">
-                <p className="font-medium text-slate-700 dark:text-slate-300">MediAI Headquarters</p>
-                <p className="text-sm">Solapur, Maharashtra, India</p>
+                <p className="font-medium text-slate-700 dark:text-slate-300">MediAI</p>
+                <p className="text-sm">NKOCET Solapur, Maharashtra</p>
                 <p className="mt-3 flex items-center gap-2 text-sm">
                   <Phone className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> +91 9667033839
                 </p>
                 <p className="flex items-center gap-2 text-sm">
-                  <Mail className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> support@mediai.health
+                  <Mail className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> wajiddaudtamboli123@gmail.com
                 </p>
               </div>
             </div>
@@ -104,8 +104,19 @@ function Footer() {
       {/* Copyright Bar */}
       <div className="bg-emerald-600 dark:bg-emerald-950 py-4 md:py-5 text-white dark:text-emerald-300 text-center text-xs md:text-sm w-full border-t border-emerald-700 dark:border-emerald-900 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="mb-1">© 2025 <span className="font-bold">MediAI</span> — Intelligent Healthcare Assistant</p>
-          <p className="text-xs text-emerald-200 dark:text-emerald-500">Developed with <Heart className="inline h-3 w-3 text-red-400 animate-pulse" /> by Team Synergy | All Rights Reserved</p>
+          <p className="mb-1">© 2025 <span className="font-bold">MediAI</span> — NKOCET Solapur, Maharashtra</p>
+          <p className="text-xs text-emerald-200 dark:text-emerald-500 mb-2">+91 9667033839 | wajiddaudtamboli123@gmail.com</p>
+          
+          {/* Sliding Developer Animation */}
+          <div className="overflow-hidden relative h-6 mt-2">
+            <div className="animate-slide-developer whitespace-nowrap absolute">
+              <span className="inline-flex items-center gap-2 text-xs font-medium text-emerald-100 dark:text-emerald-400">
+                <Heart className="h-3 w-3 text-red-400 animate-pulse" />
+                Developer — Wajid Daud Tamboli
+                <Heart className="h-3 w-3 text-red-400 animate-pulse" />
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

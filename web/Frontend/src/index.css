@@ -105,3 +105,19 @@ html.dark ::-webkit-scrollbar-thumb:hover {
     transition-duration: 200ms;
     transition-timing-function: ease-in-out;
 }
+
+/* Sliding Developer Animation */
+@keyframes slide-developer {
+    0% {
+        transform: translateX(100%);
+        left: 100%;
+    }
+    100% {
+        transform: translateX(-100%);
+        left: 0%;
+    }
+}
+
+.animate-slide-developer {
+    animation: slide-developer 12s linear infinite;
+}
