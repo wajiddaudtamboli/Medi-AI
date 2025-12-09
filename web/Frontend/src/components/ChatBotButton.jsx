@@ -258,7 +258,7 @@ const ChatBotButton = () => {
             <div className="relative">
               {/* Previous chatbot icon */}
               <img
-                src="src/assets/chat-bot.jpeg"
+                src="/assets/chat-bot.jpeg"
                 className="w-12 h-12 object-contain"
                 alt="Chat with Arogya AI"
               />
@@ -279,7 +279,7 @@ const ChatBotButton = () => {
             <div className="flex items-center space-x-3">
               {/* Previous small chatbot icon in header */}
               <img
-                src="src/assets/noun-chatbot-1718966-picaai-removebg-preview.jpeg"
+                src="/assets/noun-chatbot-1718966-picaai-removebg-preview.jpeg"
                 className="w-8 h-8"
                 alt="Arogya AI"
               />

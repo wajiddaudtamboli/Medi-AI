@@ -39,7 +39,7 @@ export default function Navbar() {
                 <a href="/" className="flex items-center">
                     <div className="h-10 w-10">
                         <img
-                            src="/src/assets/logo.png"
+                            src="/assets/logo.png"
                             alt="MediAI Logo"
                             className="w-auto object-contain ml-4 md:ml-8 cursor-pointer transition-transform duration-300 hover:scale-105"
                         />
