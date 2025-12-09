@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { Video, Microscope, Heart, Stethoscope, Ambulance, Watch, Mic, MicOff } from "lucide-react";
 import "./Hero.css";
 
 function Card({ icon, title, description, route, role }) {
@@ -269,126 +270,100 @@ const HealthcareCards = () => {
         }
     };
 
-    // Add CSS for responsive design
-    const responsiveStyles = {
-        container: {
-            width: "100%",
-            padding: "1rem",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+    const cardData = [
+        {
+            icon: Video,
+            title: "Telemedicine",
+            description: "Smart Telemedicine for Smarter Health",
+            route: "telemedicine",
+            color: "blue"
         },
-        cardsContainer: {
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "1.5rem",
-            width: "100%",
-            maxWidth: "1200px",
-            margin: "0 auto",
+        {
+            icon: Microscope,
+            title: "Analysis",
+            description: "Get Expert Medical Insights Instantly",
+            route: "/analysis",
+            color: "purple"
         },
-        card: {
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            transition: "transform 0.3s ease, box-shadow 0.3s ease",
+        {
+            icon: Heart,
+            title: "Health Tips",
+            description: "Daily Wellness Tips for a Healthier You",
+            route: "/health",
+            color: "pink"
         },
+        {
+            icon: Stethoscope,
+            title: "Consult",
+            description: "Instant Healthcare, Anytime, Anywhere",
+            route: "/chat",
+            color: "green"
+        },
+        {
+            icon: Ambulance,
+            title: "Emergency",
+            description: "Your Health, Our Priority - 24/7",
+            route: "emergency",
+            color: "red"
+        },
+        {
+            icon: Watch,
+            title: "Health-Watch",
+            description: "Personalized Health Tips, Just For You",
+            route: "/watch",
+            color: "cyan"
+        }
+    ];
+
+    const getColorClasses = (color) => {
+        const colors = {
+            blue: { bg: "bg-blue-50", icon: "bg-blue-100 text-blue-700", hover: "hover:border-blue-300" },
+            purple: { bg: "bg-purple-50", icon: "bg-purple-100 text-purple-700", hover: "hover:border-purple-300" },
+            pink: { bg: "bg-pink-50", icon: "bg-pink-100 text-pink-700", hover: "hover:border-pink-300" },
+            green: { bg: "bg-green-50", icon: "bg-green-100 text-green-700", hover: "hover:border-green-300" },
+            red: { bg: "bg-red-50", icon: "bg-red-100 text-red-700", hover: "hover:border-red-300" },
+            cyan: { bg: "bg-cyan-50", icon: "bg-cyan-100 text-cyan-700", hover: "hover:border-cyan-300" }
+        };
+        return colors[color] || colors.blue;
     };
 
     return (
-        <div style={responsiveStyles.container}>
-            <button
-                className="mb-6 px-6 py-3 rounded-full text-white font-medium shadow-lg transition-all duration-300 hover:shadow-xl flex items-center justify-center"
-                style={{
-                    background: isListening
-                        ? "linear-gradient(to right, #f87171, #ef4444)"
-                        : "linear-gradient(to right, #60a5fa, #3b82f6)",
-                    width: "auto",
-                    minWidth: "180px",
-                    maxWidth: "220px",
-                }}
-                onClick={toggleListening}
-            >
-                <span className="mr-2 text-xl">{isListening ? "🛑" : "🎙️"}</span>
-                <span>{isListening ? "Stop Listening" : "Start Listening"}</span>
-            </button>
-
-            <div style={responsiveStyles.cardsContainer}>
-                {/* Card 1 */}
-                <div
-                    className="bg-blue-100 shadow-lg rounded-xl text-center p-8 hover:shadow-xl transform transition-all duration-300 hover:-translate-y-1"
-                    onClick={() => handleCardClick("telemedicine")}
-                    style={responsiveStyles.card}
+        <div className="w-full">
+            {/* Voice Control Button */}
+            <div className="flex justify-center mb-8">
+                <button
+                    className={`flex items-center gap-2 px-6 py-3 rounded-full font-medium shadow-md transition-all duration-300 hover:shadow-lg ${
+                        isListening 
+                            ? "bg-red-500 text-white hover:bg-red-600" 
+                            : "bg-blue-700 text-white hover:bg-blue-800"
+                    }`}
+                    onClick={toggleListening}
                 >
-                    <div className="mb-6 text-blue-600 text-5xl">📞</div>
-                    <h2 className="text-2xl font-bold mb-3">Telemedicine</h2>
-                    <p className="text-gray-600">Smart Telemedicine for Smarter Health</p>
-                </div>
+                    {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+                    <span>{isListening ? "Stop Listening" : "Voice Commands"}</span>
+                </button>
+            </div>
 
-                {/* Card 2 */}
-                <div
-                    className="bg-blue-100 shadow-lg rounded-xl text-center p-8 hover:shadow-xl transform transition-all duration-300 hover:-translate-y-1"
-                    onClick={() => handleCardClick("/analysis")}
-                    style={responsiveStyles.card}
-                >
-                    <div className="mb-6 text-blue-600 text-5xl">🏥</div>
-                    <h2 className="text-2xl font-bold mb-3">Analysis</h2>
-                    <p className="text-gray-600">
-                        Get Expert Medical Insights Instantly
-                    </p>
-                </div>
-
-                {/* Card 3 */}
-                <div
-                    className="bg-blue-100 shadow-lg rounded-xl text-center p-8 hover:shadow-xl transform transition-all duration-300 hover:-translate-y-1"
-                    onClick={() => handleCardClick("/health")}
-                    style={responsiveStyles.card}
-                >
-                    <div className="mb-6 text-blue-600 text-5xl">😷</div>
-                    <h2 className="text-2xl font-bold mb-3">Health Tips</h2>
-                    <p className="text-gray-600">
-                        Daily Wellness Tips for a Healthier You
-                    </p>
-                </div>
-
-                {/* Card 4 */}
-                <div
-                    className="bg-blue-100 shadow-lg rounded-xl text-center p-8 hover:shadow-xl transform transition-all duration-300 hover:-translate-y-1"
-                    onClick={() => handleCardClick("/chat")}
-                    style={responsiveStyles.card}
-                >
-                    <div className="mb-6 text-blue-600 text-5xl">🩺</div>
-                    <h2 className="text-2xl font-bold mb-3">Consult</h2>
-                    <p className="text-gray-600">
-                        Instant Healthcare, Anytime, Anywhere
-                    </p>
-                </div>
-
-                {/* Card 5 */}
-                <div
-                    className="bg-blue-100 shadow-lg rounded-xl text-center p-8 hover:shadow-xl transform transition-all duration-300 hover:-translate-y-1"
-                    onClick={() => handleCardClick("emergency")}
-                    style={responsiveStyles.card}
-                >
-                    <div className="mb-6 text-blue-600 text-5xl">🚑</div>
-                    <h2 className="text-2xl font-bold mb-3">Emergency</h2>
-                    <p className="text-gray-600">
-                        Your Health, Our Priority - 24/7
-                    </p>
-                </div>
-
-                {/* Card 6 */}
-                <div
-                    className="bg-blue-100 shadow-lg rounded-xl text-center p-8 hover:shadow-xl transform transition-all duration-300 hover:-translate-y-1"
-                    onClick={() => handleCardClick("/watch")}
-                    style={responsiveStyles.card}
-                >
-                    <div className="mb-6 text-blue-600 text-5xl">⌚️</div>
-                    <h2 className="text-2xl font-bold mb-3">Health-Watch</h2>
-                    <p className="text-gray-600">
-                        Personalized Health Tips, Just For You
-                    </p>
-                </div>
+            {/* Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {cardData.map((card, index) => {
+                    const colorClasses = getColorClasses(card.color);
+                    const IconComponent = card.icon;
+                    
+                    return (
+                        <button
+                            key={index}
+                            className={`${colorClasses.bg} border border-slate-200 ${colorClasses.hover} rounded-xl text-left p-6 hover:shadow-lg transform transition-all duration-300 hover:-translate-y-1 cursor-pointer group`}
+                            onClick={() => handleCardClick(card.route)}
+                        >
+                            <div className={`${colorClasses.icon} w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                                <IconComponent className="w-7 h-7" />
+                            </div>
+                            <h3 className="text-xl font-semibold text-slate-900 mb-2">{card.title}</h3>
+                            <p className="text-slate-600 text-sm">{card.description}</p>
+                        </button>
+                    );
+                })}
             </div>
         </div>
     );

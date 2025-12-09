@@ -244,27 +244,26 @@ const ChatBotButton = () => {
   return (
     <>
       {/* Floating Chat Button */}
-      <div className="fixed bottom-8 right-8 z-50">
+      <div className="fixed bottom-6 left-6 z-50">
         <button
           onClick={toggleChat}
-          className={`w-16 h-16 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 transform ${isOpen
-              ? "rotate-90 bg-rose-500"
-              : "bg-gradient-to-br from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700"
+          className={`w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 transform hover:scale-105 ${isOpen
+              ? "rotate-90 bg-red-500"
+              : "bg-blue-700 hover:bg-blue-800"
             }`}
         >
           {isOpen ? (
-            <X className="w-6 h-6 text-white" />
+            <X className="w-5 h-5 text-white" />
           ) : (
             <div className="relative">
-              {/* Previous chatbot icon */}
               <img
                 src="/assets/chat-bot.jpeg"
-                className="w-12 h-12 object-contain"
+                className="w-10 h-10 object-cover rounded-full"
                 alt="Chat with Arogya AI"
               />
               {messages.length > 1 && (
-                <div className="absolute -top-1 -right-1 bg-rose-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full shadow-md animate-ping">
-                  <span className="animate-pulse">!</span>
+                <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+                  !
                 </div>
               )}
             </div>
@@ -273,19 +272,18 @@ const ChatBotButton = () => {
       </div>
 
       {isOpen && (
-        <div className="fixed bottom-28 right-8 w-96 h-[32rem] bg-white rounded-2xl shadow-2xl z-50 flex flex-col border border-gray-100 overflow-hidden backdrop-blur-sm bg-opacity-90">
+        <div className="fixed bottom-24 left-6 w-80 sm:w-96 h-[28rem] sm:h-[32rem] bg-white rounded-xl shadow-2xl z-50 flex flex-col border border-slate-200 overflow-hidden">
           {/* Header */}
-          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-4 rounded-t-2xl flex justify-between items-center">
+          <div className="bg-blue-700 p-4 rounded-t-xl flex justify-between items-center">
             <div className="flex items-center space-x-3">
-              {/* Previous small chatbot icon in header */}
               <img
                 src="/assets/noun-chatbot-1718966-picaai-removebg-preview.jpeg"
-                className="w-8 h-8"
+                className="w-8 h-8 rounded-full bg-white p-0.5"
                 alt="Arogya AI"
               />
               <div>
                 <h3 className="text-white font-semibold">Arogya AI</h3>
-                <p className="text-xs text-indigo-100">
+                <p className="text-xs text-blue-200">
                   Your personal health assistant
                 </p>
               </div>
@@ -293,7 +291,7 @@ const ChatBotButton = () => {
             <div className="flex items-center space-x-2">
               <button
                 onClick={toggleLanguageSelector}
-                className="p-2 rounded-full hover:bg-white hover:bg-opacity-20 transition-colors"
+                className="p-2 rounded-full hover:bg-white/20 transition-colors"
                 title="Select language"
               >
                 <Globe className="w-4 h-4 text-white" />
@@ -311,17 +309,17 @@ const ChatBotButton = () => {
 
           {/* Language Selector Dropdown */}
           {showLanguageSelector && (
-            <div className="absolute right-4 top-16 w-40 bg-white border border-gray-200 rounded-xl shadow-lg z-10 overflow-hidden animate-fade-in">
-              <div className="px-3 py-2 text-xs font-medium text-gray-500 bg-gray-50">
+            <div className="absolute left-4 top-16 w-40 bg-white border border-slate-200 rounded-lg shadow-lg z-10 overflow-hidden">
+              <div className="px-3 py-2 text-xs font-medium text-slate-500 bg-slate-50">
                 Select Language
               </div>
               {languageOptions.map((lang) => (
                 <button
                   key={lang.code}
                   onClick={() => selectLanguage(lang.code)}
-                  className={`w-full text-left px-4 py-2 text-sm hover:bg-indigo-50 transition-colors ${selectedLanguage === lang.code
-                      ? "bg-indigo-100 text-indigo-700 font-medium"
-                      : "text-gray-700"
+                  className={`w-full text-left px-4 py-2 text-sm hover:bg-blue-50 transition-colors ${selectedLanguage === lang.code
+                      ? "bg-blue-100 text-blue-700 font-medium"
+                      : "text-slate-700"
                     }`}
                 >
                   {lang.name}
@@ -333,7 +331,7 @@ const ChatBotButton = () => {
           {/* Chat Container */}
           <div
             ref={chatContainerRef}
-            className="flex-1 p-4 overflow-y-auto bg-gradient-to-b from-gray-50 to-white"
+            className="flex-1 p-4 overflow-y-auto bg-slate-50"
             style={{ scrollBehavior: "smooth" }}
           >
             <div className="space-y-4">
@@ -341,12 +339,12 @@ const ChatBotButton = () => {
                 <div
                   key={index}
                   className={`flex ${message.type === "user" ? "justify-end" : "justify-start"
-                    } mb-4`}
+                    } mb-3`}
                 >
                   <div
-                    className={`max-w-[70%] rounded-lg p-3 ${message.type === "user"
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-100 text-gray-800"
+                    className={`max-w-[80%] rounded-lg p-3 text-sm ${message.type === "user"
+                        ? "bg-blue-700 text-white rounded-br-none"
+                        : "bg-white text-slate-800 border border-slate-200 rounded-bl-none"
                       }`}
                   >
                     <div className="prose prose-sm max-w-none">
@@ -359,18 +357,18 @@ const ChatBotButton = () => {
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm rounded-bl-none max-w-[85%]">
+                  <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm rounded-bl-none">
                     <div className="flex space-x-2">
                       <div
-                        className="w-2.5 h-2.5 bg-indigo-400 rounded-full animate-bounce"
+                        className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"
                         style={{ animationDelay: "0s" }}
                       ></div>
                       <div
-                        className="w-2.5 h-2.5 bg-indigo-400 rounded-full animate-bounce"
+                        className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"
                         style={{ animationDelay: "0.2s" }}
                       ></div>
                       <div
-                        className="w-2.5 h-2.5 bg-indigo-400 rounded-full animate-bounce"
+                        className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"
                         style={{ animationDelay: "0.4s" }}
                       ></div>
                     </div>
@@ -381,14 +379,14 @@ const ChatBotButton = () => {
           </div>
 
           {/* Input Area */}
-          <div className="border-t border-gray-200 p-4 bg-white">
+          <div className="border-t border-slate-200 p-3 bg-white">
             <form onSubmit={handleSubmit} className="flex gap-2 items-center">
               <button
                 type="button"
                 onClick={toggleListening}
-                className={`p-3 rounded-full transition-all ${isListening
-                    ? "bg-rose-500 text-white animate-pulse"
-                    : "bg-gray-100 hover:bg-gray-200 text-gray-600"
+                className={`p-2.5 rounded-full transition-all ${isListening
+                    ? "bg-red-500 text-white animate-pulse"
+                    : "bg-slate-100 hover:bg-slate-200 text-slate-600"
                   }`}
               >
                 <Mic className="w-4 h-4" />
@@ -398,21 +396,21 @@ const ChatBotButton = () => {
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 placeholder={getInputPlaceholder()}
-                className="flex-1 border border-gray-300 rounded-full px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-transparent bg-white text-gray-800 placeholder-gray-500 transition-all"
+                className="flex-1 border border-slate-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-slate-800 placeholder-slate-500"
                 disabled={isLoading}
               />
               <button
                 type="submit"
                 disabled={isLoading || !inputMessage.trim()}
-                className={`p-3 rounded-full transition-all ${isLoading || !inputMessage.trim()
-                    ? "bg-gray-300 text-gray-500"
-                    : "bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white shadow-md"
+                className={`p-2.5 rounded-full transition-all ${isLoading || !inputMessage.trim()
+                    ? "bg-slate-200 text-slate-400"
+                    : "bg-blue-700 hover:bg-blue-800 text-white"
                   }`}
               >
                 <Send className="w-4 h-4" />
               </button>
             </form>
-            <div className="mt-3 text-xs text-center text-gray-400">
+            <div className="mt-2 text-xs text-center text-slate-400">
               <span>
                 Powered by MediAI •{" "}
                 {
