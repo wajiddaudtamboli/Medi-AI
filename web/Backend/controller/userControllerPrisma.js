@@ -87,18 +87,18 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
 
     // Send welcome message
     if (isEmail) {
-        const message = `Welcome to CureConnect ${name}`;
+        const message = `Welcome to MediAI ${name}`;
         try {
             await sendEmail({
                 email: contact,
-                subject: `Welcome to CureConnect`,
+                subject: `Welcome to MediAI`,
                 message,
             });
         } catch (error) {
             console.error("Email sending failed:", error);
         }
     } else {
-        const message = `Welcome to CureConnect ${name}`;
+        const message = `Welcome to MediAI ${name}`;
         try {
             await sendSMS({
                 phone: `+91${contact}`,
@@ -338,13 +338,13 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
         if (validator.isEmail(contact)) {
             await sendEmail({
                 email: contact,
-                subject: `CureConnect Password Recovery`,
+                subject: `MediAI Password Recovery`,
                 message,
             });
         } else {
             await sendSMS({
                 phone: `+91${contact}`,
-                message: `Your CureConnect password reset token: ${resetToken}`,
+                message: `Your MediAI password reset token: ${resetToken}`,
             });
         }
 
